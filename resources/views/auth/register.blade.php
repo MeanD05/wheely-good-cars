@@ -35,7 +35,7 @@
 
         <!-- Submit & Login Link -->
         <div class="flex flex-col sm:flex-row items-center gap-2 mt-2 sm:mt-0">
-            <x-primary-button class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded">
+            <x-primary-button class="bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded">
                 {{ __('Register') }}
             </x-primary-button>
 

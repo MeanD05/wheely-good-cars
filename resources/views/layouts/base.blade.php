@@ -17,7 +17,7 @@
             <nav class="nav">
                 <a href="/" class="nav-link">Alle auto's</a>
                 <a href="/cars" class="nav-link">Mijn aanbod</a>
-                <a href="/contact" class="nav-link">Aanbod plaatsen</a>
+                <a href="{{ route('offercar') }}" class="nav-link">Aanbod plaatsen</a>
             </nav>
 
             <div class="auth-links">

@@ -21,7 +21,25 @@ class CarController extends Controller
      */
     public function create()
     {
-        //
+        return view('offercar');
+    }
+
+    public function create_step1()
+    {
+        $license_plate = request('license_plate');
+
+
+
+        //HIER KOMT NOG API CALL OM TE CHECKEN OF KENTEKEN BESTAAT
+        
+        return redirect()->route('offercar.step2', ['license_plate' => $license_plate]);
+
+        
+    }
+
+    public function create_step2($license_plate)
+    {
+        return view('offercar_step2', ['license_plate' => $license_plate]);
     }
 
     /**
@@ -29,7 +47,42 @@ class CarController extends Controller
      */
     public function store(StoreCarRequest $request)
     {
-        //
+        $validated = $request->validate([
+            'license_plate' => 'required|string',
+            'make' => 'required|string',
+            'model' => 'required|string',
+            'price' => 'required|numeric',
+            'mileage' => 'required|integer',
+            'seats' => 'nullable|integer',
+            'doors' => 'nullable|integer',
+            'year' => 'nullable|integer',
+            'weight' => 'nullable|integer',
+            'color' => 'nullable|string',
+        ],
+        [
+            'license_plate.required' => 'Het kenteken is verplicht.',
+            'make.required' => 'Het merk is verplicht.',
+            'model.required' => 'Het model is verplicht.',
+            'price.required' => 'De prijs is verplicht.',
+            'mileage.required' => 'De kilometerstand is verplicht.',
+        ]
+        );
+        $user = auth()->user();
+        Car::create([
+            'user_id' => $user->id,
+            'license_plate' => $validated['license_plate'],
+            'make' => $validated['make'],
+            'model' => $validated['model'],
+            'price' => $validated['price'],
+            'mileage' => $validated['mileage'],
+            'seats' => $validated['seats'] ?? null,
+            'doors' => $validated['doors'] ?? null,
+            'production_year' => $validated['year'] ?? null,
+            'weight' => $validated['weight'] ?? null,
+            'color' => $validated['color'] ?? null,
+        ]);
+
+        return redirect()->route('home')->with('success', 'Auto succesvol toegevoegd!');
     }
 
     /**

@@ -8,8 +8,9 @@
 
 html, body {
     height: 100%;
-    background-color: #f4f4f9;
     color: #333;
+    background-color: #f9f9f9;
+    
 }
 
 body {
@@ -72,7 +73,7 @@ body {
 
 .auth-links a:hover,
 .auth-links button:hover {
-    background-color: #d97706;
+    background-color: #e0e0e0;
 }
 
 .errors ul {

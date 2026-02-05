@@ -27,7 +27,7 @@
 
         <!-- Submit Button -->
         <div class="flex items-center gap-2">
-            <x-primary-button class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded">
+            <x-primary-button class="bg-black hover:bg-black text-white font-bold py-2 px-4 rounded">
                 {{ __('Log in') }}
             </x-primary-button>
 

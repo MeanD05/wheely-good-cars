@@ -27,7 +27,7 @@
         <!-- Back Button -->
         <div class="w-full sm:max-w-md flex justify-start mb-4">
             <a href="{{ route('home') }}" 
-               class="text-white bg-blue-600 hover:bg-blue-700 font-semibold py-2 px-4 rounded shadow">
+               class="text-black bg-black hover:bg-gray-800 font-semibold py-2 px-4 rounded shadow">
                 &larr; Back
             </a>
         </div>
