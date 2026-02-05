@@ -11,6 +11,26 @@
 
     <!-- Header -->
     <header class="header">
+
+      <div class="messages">
+        @if (session('success'))
+            <div class="p-3 mb-3 rounded bg-green-100 text-green-800 border border-green-200">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="p-3 mb-3 rounded bg-red-100 text-red-800 border border-red-200">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        @if (session('status'))
+            <div class="p-3 mb-3 rounded bg-blue-100 text-blue-800 border border-blue-200">
+                {{ session('status') }}
+            </div>
+        @endif
+        </div>
         <div class="header-container">
             <h1 class="logo">WheelyGoodCars</h1>
 
@@ -26,6 +46,7 @@
                         @csrf
                         <button type="submit">Log uit</button>
                     </form>
+                    <a href="{{ route('cars.mycars') }}" class="ml-4">Mijn aangeboden auto's</a>
                 @else
                     <a href="{{ route('login') }}">Log in</a>
                     <a href="{{ route('register') }}">Registreer</a>
@@ -33,18 +54,7 @@
             </div>
         </div>
 
-      <div class="errors">
-            @if ($errors->any())
-                <div class="errors">
-                    <strong>Er zijn fouten opgetreden:</strong>
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-        </div>
+
     </header>
 
     <!-- Main content -->

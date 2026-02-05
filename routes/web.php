@@ -16,11 +16,15 @@ Route::get('/dashboard', function () {
     return view('welcome');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
+
 Route::middleware('auth')->group(function () {
     Route::get('/offercar', [CarController::class, 'create'])->name('offercar'); 
     Route::post('/offercar/addcar', [CarController::class, 'create_step1'])->name('offercar.step1');
     Route::get('/offercar/addcar/{license_plate}', [CarController::class, 'create_step2'])->name('offercar.step2');
     Route::post('/offercar/store', [CarController::class, 'store'])->name('offercar.store');
+    Route::get('/mycars', [CarController::class, 'showmycars'])->name('cars.mycars');
+    Route::delete('/mycars/{car}/delete', [CarController::class, 'destroy'])->name('cars.destroy');
 });
 
 require __DIR__.'/auth.php';

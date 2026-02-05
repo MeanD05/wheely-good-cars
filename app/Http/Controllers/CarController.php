@@ -16,6 +16,13 @@ class CarController extends Controller
         //
     }
 
+    public function showmycars()
+    {
+        $user = auth()->user();
+        $cars = Car::where('user_id', $user->id)->get();
+        return view('mycars', ['cars' => $cars]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -98,7 +105,7 @@ class CarController extends Controller
      */
     public function edit(Car $car)
     {
-        //
+        
     }
 
     /**
@@ -106,7 +113,7 @@ class CarController extends Controller
      */
     public function update(UpdateCarRequest $request, Car $car)
     {
-        //
+        
     }
 
     /**
@@ -114,6 +121,7 @@ class CarController extends Controller
      */
     public function destroy(Car $car)
     {
-        //
+        $car->delete();
+        return redirect()->route('cars.mycars')->with('success', 'Auto succesvol verwijderd!');
     }
 }
