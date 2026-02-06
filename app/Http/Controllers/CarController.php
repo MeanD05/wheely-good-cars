@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http; // ✅ correcte import
 use App\Models\Car;
 use App\Http\Requests\StoreCarRequest;
 use App\Http\Requests\UpdateCarRequest;
@@ -16,6 +18,9 @@ class CarController extends Controller
         //
     }
 
+    /**
+     * Show the cars of the authenticated user.
+     */
     public function showmycars()
     {
         $user = auth()->user();
@@ -24,33 +29,76 @@ class CarController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new car.
      */
     public function create()
     {
         return view('offercar');
     }
 
+    /**
+     * Step 1: Get car data from RDW API using license plate.
+     */
     public function create_step1()
     {
-        $license_plate = request('license_plate');
 
 
+        $license_plate = strtoupper(str_replace('-', '', request('license_plate')));
 
-        //HIER KOMT NOG API CALL OM TE CHECKEN OF KENTEKEN BESTAAT
-        
-        return redirect()->route('offercar.step2', ['license_plate' => $license_plate]);
+       
 
-        
-    }
 
-    public function create_step2($license_plate)
-    {
-        return view('offercar_step2', ['license_plate' => $license_plate]);
+        // RDW API call
+        $response = Http::withHeaders([
+            'X-App-Token' => config('services.rdw.token'),
+            'Accept' => 'application/json',
+        ])->get('https://opendata.rdw.nl/resource/m9d7-ebf2.json', [
+            'kenteken' => $license_plate,
+        ]);
+
+
+       
+
+       if ($response->failed()) {
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'license_plate' => 'Fout bij het ophalen van gegevens. Probeer het later opnieuw.'
+                ]);
+        }
+
+        $data = $response->json();
+
+        if (empty($data)) {
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'license_plate' => 'Kenteken niet gevonden'
+                ]);
+        }
+
+        // Auto bestaat → data opslaan voor stap 2
+        session(['car_api_data' => $data[0]]);
+
+        return redirect()->route('offercar.step2', [
+            'license_plate' => $license_plate
+        ]);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Step 2: Show the form to confirm/add car details.
+     */
+    public function create_step2($license_plate)
+    {
+        $car_api_data = session('car_api_data');
+        return view('offercar_step2', [
+            'license_plate' => $license_plate,
+            'car_api_data' => $car_api_data
+        ]);
+    }
+
+    /**
+     * Store a newly created car in storage.
      */
     public function store(StoreCarRequest $request)
     {
@@ -65,16 +113,16 @@ class CarController extends Controller
             'year' => 'nullable|integer',
             'weight' => 'nullable|integer',
             'color' => 'nullable|string',
-        ],
-        [
+        ], [
             'license_plate.required' => 'Het kenteken is verplicht.',
             'make.required' => 'Het merk is verplicht.',
             'model.required' => 'Het model is verplicht.',
             'price.required' => 'De prijs is verplicht.',
             'mileage.required' => 'De kilometerstand is verplicht.',
-        ]
-        );
+        ]);
+
         $user = auth()->user();
+
         Car::create([
             'user_id' => $user->id,
             'license_plate' => $validated['license_plate'],
@@ -93,7 +141,7 @@ class CarController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified car.
      */
     public function show(Car $car)
     {
@@ -101,23 +149,23 @@ class CarController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified car.
      */
     public function edit(Car $car)
     {
-        
+        //
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified car in storage.
      */
     public function update(UpdateCarRequest $request, Car $car)
     {
-        
+        //
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified car from storage.
      */
     public function destroy(Car $car)
     {
