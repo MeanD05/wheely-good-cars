@@ -36,7 +36,7 @@
 
             <nav class="nav">
                 <a href="/" class="nav-link">Alle auto's</a>
-                <a href="/cars" class="nav-link">Mijn aanbod</a>
+                <a href="{{ route('cars.mycars') }}" class="nav-link">Mijn aangeboden auto's</a>
                 <a href="{{ route('offercar') }}" class="nav-link">Aanbod plaatsen</a>
             </nav>
 
@@ -46,7 +46,6 @@
                         @csrf
                         <button type="submit">Log uit</button>
                     </form>
-                    <a href="{{ route('cars.mycars') }}" class="ml-4">Mijn aangeboden auto's</a>
                 @else
                     <a href="{{ route('login') }}">Log in</a>
                     <a href="{{ route('register') }}">Registreer</a>
