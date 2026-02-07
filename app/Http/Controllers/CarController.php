@@ -15,7 +15,8 @@ class CarController extends Controller
      */
     public function index()
     {
-        //
+        $cars = Car::latest()->get();
+        return view('welcome', ['cars' => $cars]);
     }
 
     /**

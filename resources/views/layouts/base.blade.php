@@ -16,7 +16,7 @@
             <h1 class="logo">WheelyGoodCars</h1>
 
             <nav class="nav">
-                <a href="/" class="nav-link">Alle auto's</a>
+                <a href="{{ route('home') }}" class="nav-link">Alle auto's</a>
                 <a href="{{ route('cars.mycars') }}" class="nav-link">Mijn aangeboden auto's</a>
                 <a href="{{ route('offercar') }}" class="nav-link">Aanbod plaatsen</a>
             </nav>
@@ -27,6 +27,8 @@
                         @csrf
                         <button type="submit">Log uit</button>
                     </form>
+                    <p class="ml-4">Ingelogd als: {{ Auth::user()->name }}</p>
+
                 @else
                     <a href="{{ route('login') }}">Log in</a>
                     <a href="{{ route('register') }}">Registreer</a>

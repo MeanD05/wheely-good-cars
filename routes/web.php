@@ -4,17 +4,9 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CarController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [CarController::class, 'index'])->name('home');
 
-Route::get('/home', function () {
-    return view('welcome');
-})->name('home');
 
-Route::get('/dashboard', function () {
-    return view('welcome');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 
 

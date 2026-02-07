@@ -1,27 +1,31 @@
 <x-base-layout>
-    <main class="bg-gray-50">
-        <div class="max-w-5xl mx-auto px-4 py-16 text-center">
+    <main class="max-w-4xl mx-auto p-6 space-y-6">
 
-            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900">
-                Welkom bij WheelyGoodCars
-            </h1>
+        @foreach ($cars as $car )
 
-            <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
-                WheelyGoodCars is een online marktplaats waar kopen en verkopen van auto's
-                eenvoudig, transparant en betrouwbaar samenkomt.
-            </p>
-
-            <p class="mt-2 text-gray-600 max-w-2xl mx-auto">
-                Of je nu op zoek bent naar je volgende auto of jouw huidige auto wilt aanbieden,
-                hier regel je het zonder gedoe.
-            </p>
-
-                <a href="{{ route('offercar') ?? '#' }}"
-                   class="px-6 py-3 rounded-2xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition mt-8 inline-block">
-                    Auto verkopen
-                </a>
+       
+            <div class="bg-white shadow-lg rounded-xl hover:shadow-2xl transition-shadow duration-300 p-6 flex flex-col justify-between">
+                
+            
+                <div class="text-2xl font-bold text-gray-800 mb-2">
+                    @if ($car->model !== 'N/A' && $car->model !== 'N.v.t')
+                        {{ $car->make }} {{ $car->model }} 
+                    @else
+                        {{ $car->make }}
+                    @endif
+                        
+                </div>
+                
+                <div class="text-gray-600 mb-4">
+                    <p>Door: {{ $car->user->name }}</p>
+                </div>
+                
+            
+                <div class="mt-auto text-right text-xl font-extrabold text-green-600">
+                    <p>€ {{ number_format($car->price, 2, ',', '.') }}</p>
+                </div>
             </div>
+        @endforeach
 
-        </div>
     </main>
 </x-base-layout>
