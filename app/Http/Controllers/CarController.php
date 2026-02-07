@@ -43,17 +43,18 @@ class CarController extends Controller
     {
 
 
-        $license_plate = strtoupper(str_replace('-', '', request('license_plate')));
+        $license_plate_api = strtoupper(str_replace('-', '', request('license_plate')));
+        $license_plate = strtoupper(request('license_plate'));
 
        
 
 
-        // RDW API call
+        
         $response = Http::withHeaders([
             'X-App-Token' => config('services.rdw.token'),
             'Accept' => 'application/json',
         ])->get('https://opendata.rdw.nl/resource/m9d7-ebf2.json', [
-            'kenteken' => $license_plate,
+            'kenteken' => $license_plate_api,
         ]);
 
 
@@ -77,7 +78,7 @@ class CarController extends Controller
                 ]);
         }
 
-        // Auto bestaat → data opslaan voor stap 2
+   
         session(['car_api_data' => $data[0]]);
 
         return redirect()->route('offercar.step2', [
@@ -85,9 +86,7 @@ class CarController extends Controller
         ]);
     }
 
-    /**
-     * Step 2: Show the form to confirm/add car details.
-     */
+    
     public function create_step2($license_plate)
     {
         $car_api_data = session('car_api_data');
@@ -97,9 +96,7 @@ class CarController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created car in storage.
-     */
+   
     public function store(StoreCarRequest $request)
     {
         $validated = $request->validate([
