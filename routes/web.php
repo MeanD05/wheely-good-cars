@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CarController;
+use App\Http\Controllers\MyCarPdfController;
 
 Route::get('/', [CarController::class, 'index'])->name('home');
 
@@ -17,6 +18,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/offercar/store', [CarController::class, 'store'])->name('offercar.store');
     Route::get('/mycars', [CarController::class, 'showmycars'])->name('cars.mycars');
     Route::delete('/mycars/{car}/delete', [CarController::class, 'destroy'])->name('cars.destroy');
+    Route::get('/mycars/{car}/pdf', [MyCarPdfController::class, 'download'])->name('cars.pdf');
+    
 });
+
 
 require __DIR__.'/auth.php';

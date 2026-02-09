@@ -50,6 +50,8 @@
             </div>
 
             <h2 class="text-2xl font-semibold mb-6">Aanbod plaatsen</h2>
+            <p  class="text-gray-600 mb-8">Controleer de gegevens van uw voertuig</p>
+            <p class="text-gray-600 mb-8">Indien er onjuistheden zijn, pas deze dan aan en klik op "Aanbod afronden".</p>       
 
             <form action="{{ route('offercar.store') }}" method="POST" class="bg-white p-6 rounded-lg shadow-md">
             
@@ -62,37 +64,37 @@
                     <!-- Merk -->
                     <div>
                         <label class="block text-sm font-medium mb-1">Merk</label>
-                        <input type="text" name="make" readonly class="w-full rounded-lg border-gray-300 focus:ring-black focus:border-black" required value="{{ $car_api_data['merk'] ?? '' }}">
+                        <input type="text" name="make" class="w-full rounded-lg border-gray-300 focus:ring-black focus:border-black" required value="{{ $car_api_data['merk'] ?? '' }}">
                     </div>
 
                     <!-- Model -->
                     <div>
                         <label class="block text-sm font-medium mb-1">Model</label>
-                        <input type="text" name="model" readonly class="w-full rounded-lg border-gray-300 focus:ring-black focus:border-black" required value="{{ $car_api_data['handelsbenaming'] ?? '' }}">
+                        <input type="text" name="model"  class="w-full rounded-lg border-gray-300 focus:ring-black focus:border-black" required value="{{ $car_api_data['handelsbenaming'] ?? '' }}">
                     </div>
 
                     <!-- Zitplaatsen -->
                     <div>
                         <label class="block text-sm font-medium mb-1">Zitplaatsen</label>
-                        <input type="number" name="seats" readonly class="w-full rounded-lg border-gray-300 focus:ring-black focus:border-black" value="{{ $car_api_data['aantal_zitplaatsen'] ?? '' }}">
+                        <input type="number" name="seats" class="w-full rounded-lg border-gray-300 focus:ring-black focus:border-black" value="{{ $car_api_data['aantal_zitplaatsen'] ?? '' }}">
                     </div>
 
                     <!-- Aantal deuren -->
                     <div>
                         <label class="block text-sm font-medium mb-1">Aantal deuren</label>
-                        <input type="number" name="doors" readonly class="w-full rounded-lg border-gray-300 focus:ring-black focus:border-black" value="{{ $car_api_data['aantal_deuren'] ?? '' }}">
+                        <input type="number" name="doors"  class="w-full rounded-lg border-gray-300 focus:ring-black focus:border-black" value="{{ $car_api_data['aantal_deuren'] ?? '' }}">
                     </div>
 
                     <!-- Massa rijklaar -->
                     <div>
                         <label class="block text-sm font-medium mb-1">Massa rijklaar (kg)</label>
-                        <input type="number" name="weight" readonly class="w-full rounded-lg border-gray-300 focus:ring-black focus:border-black" value="{{ $car_api_data['massa_rijklaar'] ?? '' }}">
+                        <input type="number" name="weight"  class="w-full rounded-lg border-gray-300 focus:ring-black focus:border-black" value="{{ $car_api_data['massa_rijklaar'] ?? '' }}">
                     </div>
 
                     <!-- Jaar van productie -->
                     <div>
                         <label class="block text-sm font-medium mb-1">Jaar van productie</label>
-                        <input type="number" name="year" readonly class="w-full rounded-lg border-gray-300 focus:ring-black focus:border-black" value="{{ substr($car_api_data['datum_eerste_toelating'] ?? '', 0, 4) }}">
+                        <input type="number" name="year"  class="w-full rounded-lg border-gray-300 focus:ring-black focus:border-black" value="{{ substr($car_api_data['datum_eerste_toelating'] ?? '', 0, 4) }}">
 
                     </div>
 

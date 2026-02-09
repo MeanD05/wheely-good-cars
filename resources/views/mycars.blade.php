@@ -53,6 +53,10 @@
                             @endif
                         </td>
                         <td class="px-4 py-3 text-right space-x-2">
+                            <a href="{{ route('cars.pdf', $car) }}"
+                               class="text-blue hover:underline">
+                                Genereer PDF
+                            </a>
                             <form
                                 method="POST"
                                 action="{{ route('cars.destroy', $car) }}"
