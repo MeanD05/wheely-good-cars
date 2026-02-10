@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http; // ✅ correcte import
 use App\Models\Car;
+use App\Models\Tag;
 use App\Http\Requests\StoreCarRequest;
 use App\Http\Requests\UpdateCarRequest;
+
 
 class CarController extends Controller
 {
@@ -181,7 +183,23 @@ class CarController extends Controller
             'image' => $imageUrl,
         ]);
 
-        return redirect()->route('home')->with('success', 'Auto succesvol toegevoegd!');
+        $tags = Tag::all();
+        $car = Car::where('license_plate', $validated['license_plate'])->first();
+        return view('offercar_step3', ['car' => $car, 'tags' => $tags])->with('success', 'Auto succesvol toegevoegd!');
+    }
+
+    public function store_tags(Request $request)
+    {
+        $validated = $request->validate([
+            'car_id' => 'required|exists:cars,id',
+            'tags' => 'required|array',
+            'tags.*' => 'exists:tags,id',
+        ]);
+
+        $car = Car::findOrFail($validated['car_id']);
+        $car->tags()->sync($validated['tags']);
+
+        return redirect()->route('home')->with('success', 'Tags succesvol opgeslagen.');
     }
 
     /**
@@ -207,7 +225,7 @@ class CarController extends Controller
      */
     public function update(UpdateCarRequest $request, Car $car)
     {
-        //
+        
     }
 
     /**
