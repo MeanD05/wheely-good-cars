@@ -79,6 +79,16 @@
                         </div>
 
                         <div class="flex w-full flex-col gap-3 lg:w-56 lg:items-end">
+                            <div class="w-full rounded-2xl border border-gray-200 bg-white p-3">
+                                <div class="flex items-center justify-between text-[10px] uppercase tracking-widest text-gray-400">
+                                    <span>Views</span>
+                                    <span aria-hidden="true">👁</span>
+                                </div>
+                                <p class="mt-2 text-2xl font-semibold text-gray-900">
+                                    {{ number_format($car->views, 0, ',', '.') }}
+                                </p>
+                                <p class="text-xs text-gray-500">keer bekeken</p>
+                            </div>
                             <div class="w-full rounded-2xl border border-gray-200 bg-gray-50 p-3">
                                 <p class="text-[10px] uppercase tracking-widest text-gray-400">Prijs / Status</p>
                                 <div class="mt-2">

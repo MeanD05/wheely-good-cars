@@ -11,9 +11,12 @@
         @else
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach ($cars as $car)
-                    <div
-                        class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm
-                               hover:shadow-md transition-shadow duration-200">
+                    <a
+                        href="{{ route('car.show', $car) }}"
+                        class="block bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm
+                               hover:shadow-md transition-shadow duration-200"
+                        aria-label="Bekijk {{ $car->make }} {{ $car->model }}"
+                    >
 
                         {{-- Image --}}
                         <div class="h-40 bg-gray-100 flex items-center justify-center">
@@ -83,14 +86,10 @@
                                         Te koop
                                     </span>
                                 @endif
-
-                                <span class="bg-gray-100 px-2 py-1 rounded">
-                                    👁 {{ $car->views }}
-                                </span>
                             </div>
 
                         </div>
-                    </div>
+                    </a>
                 @endforeach
             </div>
 

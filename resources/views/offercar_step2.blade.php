@@ -4,11 +4,11 @@
     <div class="bg-gray-100 min-h-screen pt-28">
         <div class="container max-w-3xl mx-auto mt-10 mb-16">
 
-            <!-- Kenteken linksboven -->
+            
             <div style="margin-bottom: 2rem;">
                 <div style="display: flex; transform: scale(0.75); transform-origin: left;">
 
-                    <!-- NL vlak -->
+                   
                     <div
                         style="
                             width: 40px;
@@ -25,7 +25,7 @@
                         <span style="color: #fff; font-size: 10px; font-weight: 600;">NL</span>
                     </div>
 
-                    <!-- Kenteken -->
+                   
                     <div
                         style="
                             width: 256px;
@@ -61,62 +61,62 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                    <!-- Merk -->
+                    
                     <div>
                         <label class="block text-sm font-medium mb-1">Merk</label>
                         <input type="text" name="make" class="w-full rounded-lg border-gray-300 focus:ring-black focus:border-black" required value="{{ $car_api_data['merk'] ?? '' }}">
                     </div>
 
-                    <!-- Model -->
+                    
                     <div>
                         <label class="block text-sm font-medium mb-1">Model</label>
                         <input type="text" name="model"  class="w-full rounded-lg border-gray-300 focus:ring-black focus:border-black" required value="{{ $car_api_data['handelsbenaming'] ?? '' }}">
                     </div>
 
-                    <!-- Zitplaatsen -->
+                  
                     <div>
                         <label class="block text-sm font-medium mb-1">Zitplaatsen</label>
                         <input type="number" name="seats" class="w-full rounded-lg border-gray-300 focus:ring-black focus:border-black" value="{{ $car_api_data['aantal_zitplaatsen'] ?? '' }}">
                     </div>
 
-                    <!-- Aantal deuren -->
+                   
                     <div>
                         <label class="block text-sm font-medium mb-1">Aantal deuren</label>
                         <input type="number" name="doors"  class="w-full rounded-lg border-gray-300 focus:ring-black focus:border-black" value="{{ $car_api_data['aantal_deuren'] ?? '' }}">
                     </div>
 
-                    <!-- Massa rijklaar -->
+                  
                     <div>
                         <label class="block text-sm font-medium mb-1">Massa rijklaar (kg)</label>
                         <input type="number" name="weight"  class="w-full rounded-lg border-gray-300 focus:ring-black focus:border-black" value="{{ $car_api_data['massa_rijklaar'] ?? '' }}">
                     </div>
 
-                    <!-- Jaar van productie -->
+                   
                     <div>
                         <label class="block text-sm font-medium mb-1">Jaar van productie</label>
                         <input type="number" name="year"  class="w-full rounded-lg border-gray-300 focus:ring-black focus:border-black" value="{{ substr($car_api_data['datum_eerste_toelating'] ?? '', 0, 4) }}">
 
                     </div>
 
-                    <!-- Kleur -->
+                   
                     <div>
                         <label class="block text-sm font-medium mb-1">Kleur</label>
                         <input type="text" name="color"  class="w-full rounded-lg border-gray-300 focus:ring-black focus:border-black" value="{{ $car_api_data['eerste_kleur'] ?? '' }}">
                     </div>
 
-                    <!-- Kilometerstand -->
+                  
                     <div>
                         <label class="block text-sm font-medium mb-1">Kilometerstand</label>
                         <input type="number" name="mileage" class="w-full rounded-lg border-gray-300 focus:ring-black focus:border-black">
                     </div>
 
-                    <!-- Vraagprijs -->
+                    
                     <div class="md:col-span-2">
                         <label class="block text-sm font-medium mb-1">Vraagprijs (€)</label>
                         <input type="number" name="price" class="w-full rounded-lg border-gray-300 focus:ring-black focus:border-black">
                     </div>
 
-                    <!-- Foto -->
+                 
                     <div class="md:col-span-2">
                         <label class="block text-sm font-medium mb-1">Foto</label>
                         <input type="file" name="image" accept="image/*" class="w-full rounded-lg border-gray-300 focus:ring-black focus:border-black">

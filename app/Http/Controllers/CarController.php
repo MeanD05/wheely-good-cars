@@ -189,7 +189,9 @@ class CarController extends Controller
      */
     public function show(Car $car)
     {
-        //
+        $car = Car::findOrFail($car->id);
+        $car->increment('views');
+        return view('show_car', ['car' => $car]);
     }
 
     /**
