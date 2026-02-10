@@ -199,7 +199,17 @@ class CarController extends Controller
         $car = Car::findOrFail($validated['car_id']);
         $car->tags()->sync($validated['tags']);
 
-        return redirect()->route('home')->with('success', 'Tags succesvol opgeslagen.');
+        return redirect()->route('cars.mycars')->with('success', 'Tags succesvol opgeslagen.');
+    }
+
+    public function edit_tags(Car $car)
+    {
+        $tags = Tag::orderBy('name')->get();
+
+        return view('edit_tags', [
+            'car' => $car,
+            'tags' => $tags,
+        ]);
     }
 
     /**
