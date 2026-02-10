@@ -13,7 +13,7 @@
                 @foreach ($cars as $car)
                     <a
                         href="{{ route('car.show', $car) }}"
-                        class="block bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm
+                        class="flex h-full flex-col bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm
                                hover:shadow-md transition-shadow duration-200"
                         aria-label="Bekijk {{ $car->make }} {{ $car->model }}"
                     >
@@ -51,7 +51,7 @@
                         </div>
 
                         {{-- Content --}}
-                        <div class="p-4 space-y-3">
+                        <div class="flex flex-1 flex-col p-4 space-y-3">
 
                             <div class="text-xs text-gray-400 tracking-wide">
                                 {{ $car->license_plate }}
@@ -85,6 +85,21 @@
                                     <span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded">
                                         Te koop
                                     </span>
+                                @endif
+                            </div>
+
+                            <div class="mt-auto flex max-w-full flex-nowrap gap-2 overflow-x-auto pt-2 pb-1 text-xs text-gray-600">
+                                @if ($car->tags && $car->tags->isNotEmpty())
+                                    @foreach ($car->tags as $tag)
+                                        <span
+                                            class="shrink-0 px-2 py-1 rounded text-white"
+                                            style="background-color: {{ $tag->color }}"
+                                        >
+                                            {{ $tag->name }}
+                                        </span>
+                                    @endforeach
+                                @else
+                                    <span class="text-xs text-gray-400">Geen tags</span>
                                 @endif
                             </div>
 

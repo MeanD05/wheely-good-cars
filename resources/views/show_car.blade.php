@@ -108,7 +108,10 @@
 						<div class="mt-3 flex flex-wrap gap-2">
 							@if ($car->tags && $car->tags->isNotEmpty())
 								@foreach ($car->tags as $tag)
-									<span class="rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-semibold text-gray-700">
+									<span
+										class="rounded-full px-3 py-1 text-xs font-semibold text-white"
+										style="background-color: {{ $tag->color }}"
+									>
 										{{ $tag->name }}
 									</span>
 								@endforeach
