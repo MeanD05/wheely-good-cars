@@ -104,8 +104,8 @@ class CarController extends Controller
             'license_plate' => 'required|string',
             'make' => 'required|string',
             'model' => 'required|string',
-            'price' => 'required|numeric',
-            'mileage' => 'required|integer',
+            'price' => 'required|numeric|min:0 |max:1000000',
+            'mileage' => 'required|integer|min:0|max:1000000',
             'seats' => 'nullable|integer',
             'doors' => 'nullable|integer',
             'year' => 'nullable|integer',
@@ -117,7 +117,19 @@ class CarController extends Controller
             'model.required' => 'Het model is verplicht.',
             'price.required' => 'De prijs is verplicht.',
             'mileage.required' => 'De kilometerstand is verplicht.',
+            'seats.integer' => 'Het aantal zitplaatsen moet een getal zijn.',
+            'doors.integer' => 'Het aantal deuren moet een getal zijn.',
+            'year.integer' => 'Het bouwjaar moet een getal zijn.',
+            'weight.integer' => 'Het gewicht moet een getal zijn.',
+            'color.string' => 'De kleur moet een tekst zijn.',
+            'price.numeric' => 'De prijs moet een getal zijn.',
+            'mileage.integer' => 'De kilometerstand moet een geheel getal zijn.',
+            'price.min' => 'De prijs moet minimaal 0 zijn.',
+            'price.max' => 'De prijs mag niet hoger zijn dan 1.000.000.',
+            'mileage.min' => 'De kilometerstand moet minimaal 0 zijn.',
+            'mileage.max' => 'De kilometerstand mag niet hoger zijn dan 1.000.000.',
         ]);
+
 
         $user = auth()->user();
 

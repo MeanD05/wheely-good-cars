@@ -16,13 +16,25 @@ class CarFactory extends Factory
      */
     public function definition(): array
     {
+       $makesAndModels = [
+            'BMW' => ['3 Series', '5 Series', 'X3', 'X5', 'i8'],
+            'Audi' => ['A3', 'A4', 'A6', 'Q5', 'Q7', 'e-tron'],
+            'Volkswagen' => ['Golf', 'Passat', 'Tiguan', 'Polo', 'Arteon'],
+            'Toyota' => ['Corolla', 'Camry', 'RAV4', 'Prius', 'Highlander'],
+            'Ford' => ['Focus', 'Fiesta', 'Mustang', 'Explorer', 'F-150'],
+            'Mercedes' => ['C-Class', 'E-Class', 'S-Class', 'GLA', 'GLE'],
+            'Peugeot' => ['208', '308', '3008', '5008', '508'],
+            'Renault' => ['Clio', 'Megane', 'Captur', 'Kadjar', 'Talisman'],
+            'Tesla' => ['Model S', 'Model 3', 'Model X', 'Model Y'],
+        ];
+
+        $make = $this->faker->randomElement(array_keys($makesAndModels));
+        $model = $this->faker->randomElement($makesAndModels[$make]);
+
         return [
             'license_plate' => strtoupper($this->faker->bothify('??-###-??')),
-            'make' => $this->faker->randomElement([
-                'BMW','Audi','Volkswagen','Toyota','Ford',
-                'Mercedes','Peugeot','Renault','Tesla'
-            ]),
-            'model' => ucfirst($this->faker->word()),
+            'make' => $make,
+            'model' => $model,
             'price' => $this->faker->numberBetween(2000, 90000),
             'mileage' => $this->faker->numberBetween(0, 250000),
             'seats' => $this->faker->randomElement([2,4,5,7]),
@@ -32,8 +44,7 @@ class CarFactory extends Factory
             'color' => $this->faker->safeColorName(),
             'views' => $this->faker->numberBetween(0, 5000),
             'sold_at' => $this->faker->optional(0.2)->dateTimeThisYear(),
-            'image' => 'https://picsum.photos/seed/' . uniqid() . '/640/480',
-            
+            'image' => 'https://loremflickr.com/640/480/car?' . uniqid(),
         ];
     }
 }
