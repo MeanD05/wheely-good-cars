@@ -3,8 +3,7 @@
         <div class="w-full max-w-xl">
 
             <form method="POST"
-                  action="{{ route('offercar.step1') }}"
-                  class="rounded-2xl shadow-lg border border-gray-200">
+                  action="{{ route('offercar.step1') }}">
                 @csrf
 
                 <div class="text-center mb-8">
