@@ -7,14 +7,14 @@
 
         <!-- Email Address -->
         <div>
-            <x-input-label for="email" :value="__('Email')" />
+            <x-input-label for="email" :value="__('E-mailadres')" />
             <x-text-input id="email" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" />
         </div>
 
         <!-- Password -->
         <div>
-            <x-input-label for="password" :value="__('Password')" />
+            <x-input-label for="password" :value="__('Wachtwoord')" />
             <x-text-input id="password" type="password" name="password" required autocomplete="current-password" />
             <x-input-error :messages="$errors->get('password')" />
         </div>
@@ -22,18 +22,18 @@
         <!-- Remember Me -->
         <div>
             <input id="remember_me" type="checkbox" name="remember">
-            <label for="remember_me" class="muted">Remember me</label>
+            <label for="remember_me" class="muted">Onthoud mij</label>
         </div>
 
         <!-- Submit Button -->
         <div class="stack" style="flex-direction: row; gap: 0.75rem;">
             <x-primary-button>
-                {{ __('Log in') }}
+                {{ __('Inloggen') }}
             </x-primary-button>
 
             @if (Route::has('password.request'))
                 <a href="{{ route('password.request') }}" class="muted" style="text-decoration: underline;">
-                    {{ __('Forgot your password?') }}
+                    {{ __('Wachtwoord vergeten?') }}
                 </a>
             @endif
         </div>

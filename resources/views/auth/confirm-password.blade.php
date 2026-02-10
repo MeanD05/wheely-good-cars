@@ -1,6 +1,6 @@
 <x-guest-layout>
     <div class="muted" style="margin-bottom: 1rem;">
-        {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
+        {{ __('Dit is een beveiligd gedeelte. Bevestig je wachtwoord om verder te gaan.') }}
     </div>
 
     <form method="POST" action="{{ route('password.confirm') }}">
@@ -8,7 +8,7 @@
 
         <!-- Password -->
         <div>
-            <x-input-label for="password" :value="__('Password')" />
+            <x-input-label for="password" :value="__('Wachtwoord')" />
 
             <x-text-input id="password"
                             type="password"
@@ -20,7 +20,7 @@
 
         <div style="margin-top: 1rem;">
             <x-primary-button>
-                {{ __('Confirm') }}
+                {{ __('Bevestigen') }}
             </x-primary-button>
         </div>
     </form>

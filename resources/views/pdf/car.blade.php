@@ -9,21 +9,22 @@
     body {
       font-family: DejaVu Sans, sans-serif;
       font-size: 11px;
-      color: #111;
+      color: #1f2937;
     }
 
     .brandbar {
-      border-bottom: 2px solid #111;
+      border-bottom: 2px solid #10243f;
       padding-bottom: 10px;
       margin-bottom: 12px;
     }
 
     .brand {
-      font-size: 12px;
+      font-size: 11px;
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: #444;
+      color: #10243f;
       margin: 0 0 6px;
+      font-weight: 700;
     }
 
     .title {
@@ -34,21 +35,22 @@
 
     .subline {
       margin: 6px 0 0;
-      color: #666;
-      font-size: 11px;
+      color: #6b7280;
+      font-size: 10.5px;
     }
 
     .badge {
       float: right;
-      border: 1px solid #111;
+      border: 1px solid #e5e7eb;
       padding: 8px 10px;
       text-align: right;
-      width: 155px;
+      width: 170px;
+      background: #f8fafc;
     }
 
     .badge .label {
       font-size: 10px;
-      color: #666;
+      color: #6b7280;
       text-transform: uppercase;
       letter-spacing: 1px;
       margin: 0 0 4px;
@@ -58,27 +60,29 @@
       font-size: 16px;
       font-weight: 700;
       margin: 0;
+      color: #10243f;
     }
 
     .badge .status {
       margin: 6px 0 0;
-      font-size: 11px;
-      color: #666;
+      font-size: 10.5px;
+      color: #6b7280;
     }
 
     .clear { clear: both; }
 
     .section {
-      border: 1px solid #e6e6e6;
+      border: 1px solid #e5e7eb;
       padding: 10px;
       margin: 8px 0;
+      background: #ffffff;
     }
 
     .section-title {
-      font-size: 11px;
+      font-size: 10.5px;
       text-transform: uppercase;
       letter-spacing: 1px;
-      color: #444;
+      color: #6b7280;
       margin: 0 0 10px;
       font-weight: 700;
     }
@@ -106,14 +110,14 @@
     .k {
       display: inline-block;
       width: 45%;
-      color: #666;
+      color: #6b7280;
     }
 
     .v {
       display: inline-block;
       width: 55%;
       font-weight: 600;
-      color: #111;
+      color: #111827;
     }
 
     .highlights {
@@ -131,14 +135,15 @@
     }
 
     .card-inner {
-      border: 1px solid #e6e6e6;
+      border: 1px solid #e5e7eb;
       padding: 10px;
       height: 64px;
+      background: #f8fafc;
     }
 
     .card-label {
       font-size: 10px;
-      color: #666;
+      color: #6b7280;
       text-transform: uppercase;
       letter-spacing: 1px;
       margin: 0 0 6px;
@@ -148,23 +153,24 @@
       font-size: 13px;
       font-weight: 700;
       margin: 0;
+      color: #10243f;
     }
 
     .foot {
       margin-top: 12px;
       padding-top: 10px;
-      border-top: 1px solid #e6e6e6;
-      color: #666;
+      border-top: 1px solid #e5e7eb;
+      color: #6b7280;
       font-size: 9.5px;
     }
 
-    .foot strong { color: #111; }
+    .foot strong { color: #111827; }
 
-    .muted { color: #666; }
+    .muted { color: #6b7280; }
 
     .terms {
       font-size: 9.5px;
-      color: #555;
+      color: #4b5563;
       line-height: 1.4;
     }
 
@@ -185,6 +191,9 @@
       <p class="label">Vraagprijs</p>
       <p class="price">
         {{ $car->price ? '€ ' . number_format($car->price, 2, ',', '.') : '-' }}
+      </p>
+      <p class="status">
+        Status: {{ $car->sold_at ? 'Verkocht' : 'Beschikbaar' }}
       </p>
     </div>
 
@@ -264,14 +273,15 @@
   <div class="section">
     <p class="section-title">Voorwaarden en disclaimer</p>
     <div class="terms">
-      <p class="muted">Deze voertuigkaart is informatief en niet bindend.</p>
+      <p class="muted">Dit document is informatief en niet bindend.</p>
       <ul>
         <li>Prijzen en beschikbaarheid zijn onder voorbehoud van bevestiging door de aanbieder.</li>
-        <li>Kilometerstand en specificaties zijn overgenomen uit invoer en kunnen afwijken.</li>
-        <li>Typefouten en omissies voorbehouden.</li>
-        <li>Inspectie en proefrit worden aanbevolen voor aankoop.</li>
-        <li>De uiteindelijke verkoopinformatie wordt vastgelegd in het koopcontract.</li>
+        <li>Specificaties en kilometerstand zijn gebaseerd op ingevoerde of externe gegevens en kunnen afwijken.</li>
+        <li>Wijzigingen, typefouten en omissies voorbehouden.</li>
+        <li>Wij adviseren een inspectie en proefrit voor aankoop.</li>
+        <li>De uiteindelijke verkoopvoorwaarden worden vastgelegd in het koopcontract.</li>
       </ul>
+      <p class="muted">Wheely Good Cars is niet aansprakelijk voor onjuistheden in dit overzicht.</p>
     </div>
   </div>
 

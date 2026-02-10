@@ -115,10 +115,38 @@
 							<p class="muted">Gewicht</p>
 							<p><strong>{{ $car->weight ? number_format($car->weight, 0, ',', '.') . ' kg' : '–' }}</strong></p>
 						</div>
-						<div class="card">
-							<p class="muted">Bekeken</p>
-							<p><strong>{{ number_format($car->views, 0, ',', '.') }} keer</strong></p>
+					</div>
+				</div>
+
+				<div class="card">
+					<p class="muted">Aanbieder</p>
+					<div class="stack" style="gap: 0.5rem;">
+						<div class="card-header">
+							<span>Naam</span>
+							<span><strong>{{ $car->user->name ?? 'Onbekend' }}</strong></span>
 						</div>
+						<div class="card-header">
+							<span>E-mailadres</span>
+							<span><strong>{{ $car->user->email ?? 'Onbekend' }}</strong></span>
+						</div>
+						<div class="card-header">
+							<span>Telefoon</span>
+							<span>+31 <strong>{{ $car->user->phone_number ?? 'Onbekend' }}</strong></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="card">
+					<h2>Interesse?</h2>
+					<p class="muted">Neem contact op met de aanbieder om een afspraak of proefrit te plannen.</p>
+					<p class="muted">E-mail: <strong>{{ $car->user->email ?? 'Onbekend' }}</strong></p>
+					<div class="stack" style="flex-direction: row; flex-wrap: wrap; gap: 0.5rem;">
+						@if (!empty($car->user->email))
+							<a href="mailto:{{ $car->user->email }}" class="btn btn-red">E-mail aanbieder</a>
+						@endif
+						@if (!empty($car->user->phone_number))
+							<a href="tel:+31{{ preg_replace('/\D/', '', $car->user->phone_number) }}" class="btn btn-outline">Bel aanbieder</a>
+						@endif
 					</div>
 				</div>
 
