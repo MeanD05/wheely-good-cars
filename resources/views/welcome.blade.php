@@ -1,54 +1,83 @@
 <x-base-layout>
-    <main class="max-w-5xl mx-auto p-6 space-y-6">
-    @if ($cars->isEmpty())
-        <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4" role="alert">
-            <p class="font-bold">Geen auto's beschikbaar</p>
-        </div>
-    @endif
+    <main class="max-w-7xl mx-auto p-6">
 
-        @foreach ($cars as $car)
-        
-        
-            <div class="bg-white border border-black ">
-                
-                <div class="flex">
-                    
-                    
-                    <div class="w-1/3 bg-gray-100">
-                        <img src="public/img/Foto-gastenwagen-vierkant-scaled.jpg">
-                    </div>
+        @if ($cars->isEmpty())
+            <div class="bg-gray-50 border border-gray-200 text-gray-500 p-4 text-center italic rounded-md">
+                Nog geen auto’s geplaatst.
+            </div>
+        @else
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                @foreach ($cars as $car)
+                    <div
+                        class="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm
+                               hover:shadow-md transition-shadow duration-200">
 
-                   
-                    <div class="w-2/3 p-6 flex flex-col justify-between">
-                        
-                        <div>
-                            <h2 class="text-2xl font-semibold text-gray-800">
-                                @if ($car->model !== 'N/A' && $car->model !== 'N.v.t')
-                                    {{ $car->make }} {{ $car->model }}
-                                @else
-                                    {{ $car->make }}
-                                @endif
+                        {{-- Image --}}
+                        <div class="h-40 bg-gray-100 flex items-center justify-center">
+                            @if ($car->image)
+                                <img
+                                    src="{{ $car->image }}"
+                                    alt="{{ $car->make }} {{ $car->model }}"
+                                    class="object-cover w-full h-full"
+                                    loading="lazy"
+                                >
+                            @else
+                                <img
+                                    src="{{ asset('images/placeholder-car.png') }}"
+                                    alt="Geen afbeelding beschikbaar"
+                                    class="object-contain w-full h-full p-4 opacity-60"
+                                    loading="lazy"
+                                >
+                            @endif
+                        </div>
+
+                        {{-- Content --}}
+                        <div class="p-4 space-y-3">
+
+                            <div class="text-xs text-gray-400 tracking-wide">
+                                {{ $car->license_plate }}
+                            </div>
+
+                            <h2 class="text-base font-semibold text-gray-800 leading-tight">
+                                {{ $car->make }} {{ $car->model }}
                             </h2>
 
-                            <p class="text-sm text-gray-500 mt-1">
-                                Verkoper: <span class="font-medium text-gray-700">{{ $car->user->name }}</span>
-                            </p>
-                        </div>
+                            <div class="flex items-center justify-between pt-1">
+                                <span class="text-lg font-bold text-green-600">
+                                    €{{ number_format($car->price, 0, ',', '.') }}
+                                </span>
 
-                        <div class="flex items-end justify-between mt-6">
-                            <span class="text-sm text-gray-400">
-                                Inclusief btw
-                            </span>
+                                <span class="text-sm text-gray-500">
+                                    {{ $car->production_year }}
+                                </span>
+                            </div>
 
-                            <span class="text-2xl font-bold text-green-600">
-                                € {{ number_format($car->price, 2, ',', '.') }}
-                            </span>
+                            {{-- Badges --}}
+                            <div class="flex flex-wrap gap-2 pt-2 text-xs text-gray-600">
+                                <span class="bg-gray-100 px-2 py-1 rounded">
+                                    {{ number_format($car->mileage, 0, ',', '.') }} km
+                                </span>
+
+                                @if ($car->sold_at)
+                                    <span class="bg-green-100 text-green-700 px-2 py-1 rounded">
+                                        Verkocht
+                                    </span>
+                                @else
+                                    <span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded">
+                                        Te koop
+                                    </span>
+                                @endif
+
+                                <span class="bg-gray-100 px-2 py-1 rounded">
+                                    👁 {{ $car->views }}
+                                </span>
+                            </div>
+
                         </div>
                     </div>
-
-                </div>
+                @endforeach
             </div>
-        @endforeach
+        @endif
 
     </main>
 </x-base-layout>

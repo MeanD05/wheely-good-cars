@@ -32,6 +32,7 @@ class CarFactory extends Factory
             'color' => $this->faker->safeColorName(),
             'views' => $this->faker->numberBetween(0, 5000),
             'sold_at' => $this->faker->optional(0.2)->dateTimeThisYear(),
+            'image' => 'https://picsum.photos/seed/' . uniqid() . '/640/480',
             
         ];
     }
