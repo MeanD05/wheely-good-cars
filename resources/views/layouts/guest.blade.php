@@ -13,27 +13,27 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="/css/style.css">
 </head>
-<body class="font-sans text-gray-900 antialiased">
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
+<body>
+    <div class="auth-layout">
 
         <!-- Logo -->
-        <div class="flex justify-center mb-6">
+        <div>
             <a href="/">
                 <x-application-logo />
             </a>
         </div>
 
         <!-- Back Button -->
-        <div class="w-full sm:max-w-md flex justify-start mb-4">
-            <a href="{{ route('home') }}" 
-               class="text-white bg-black hover:bg-gray-800 font-semibold py-2 px-4 rounded shadow">
-                &larr; Back
+        <div class="auth-back">
+            <a href="{{ route('home') }}" class="btn btn-outline">
+                &larr; Terug
             </a>
         </div>
 
         <!-- Form / Page Content Slot -->
-        <div class="w-full sm:max-w-md mt-2 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+        <div class="auth-card">
             {{ $slot }}
         </div>
     </div>

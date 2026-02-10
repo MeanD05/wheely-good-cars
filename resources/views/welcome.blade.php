@@ -1,25 +1,22 @@
 <x-base-layout>
-    <main class="max-w-7xl mx-auto p-6">
-        <h1 class="text-2xl font-bold text-gray-800 mb-6">
-            Aanbod van {{ $cars->total() }} {{ Str::plural('auto', $cars->total()) }}
-        </h1>
+    <div class="container page stack">
+        <h1>Aanbod van {{ $cars->total() }} {{ Str::plural('auto', $cars->total()) }}</h1>
 
         @if ($cars->isEmpty())
-            <div class="bg-gray-50 border border-gray-200 text-gray-500 p-4 text-center italic rounded-md">
+            <div class="card muted" style="text-align: center;">
                 Nog geen auto’s geplaatst.
             </div>
         @else
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="card-grid">
                 @foreach ($cars as $car)
                     <a
                         href="{{ route('car.show', $car) }}"
-                        class="flex h-full flex-col bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm
-                               hover:shadow-md transition-shadow duration-200"
+                        class="card"
                         aria-label="Bekijk {{ $car->make }} {{ $car->model }}"
                     >
 
                         {{-- Image --}}
-                        <div class="h-40 bg-gray-100 flex items-center justify-center">
+                        <div class="card-media">
                             @if ($car->image)
                                 <img
                                     src="{{ $car->image }}"
@@ -51,58 +48,39 @@
                         </div>
 
                         {{-- Content --}}
-                        <div class="flex flex-1 flex-col p-4 space-y-3">
-
-                            <div class="text-xs text-gray-400 tracking-wide">
+                        <div class="card-body">
+                            <div class="muted" style="font-size: 0.8rem;">
                                 {{ $car->license_plate }}
                             </div>
 
-                            <h2 class="text-base font-semibold text-gray-800 leading-tight">
-                                {{ $car->make }} {{ $car->model }}
-                            </h2>
+                            <h2>{{ $car->make }} {{ $car->model }}</h2>
 
-                            <div class="flex items-center justify-between pt-1">
-                                <span class="text-lg font-bold text-green-600">
-                                    €{{ number_format($car->price, 0, ',', '.') }}
-                                </span>
-
-                                <span class="text-sm text-gray-500">
-                                    {{ $car->production_year }}
-                                </span>
+                            <div class="card-header">
+                                <span class="price">€{{ number_format($car->price, 0, ',', '.') }}</span>
+                                <span class="muted">{{ $car->production_year }}</span>
                             </div>
 
-                            {{-- Badges --}}
-                            <div class="flex flex-wrap gap-2 pt-2 text-xs text-gray-600">
-                                <span class="bg-gray-100 px-2 py-1 rounded">
-                                    {{ number_format($car->mileage, 0, ',', '.') }} km
-                                </span>
+                            <div class="stack" style="gap: 0.5rem;">
+                                <span class="pill">{{ number_format($car->mileage, 0, ',', '.') }} km</span>
 
                                 @if ($car->sold_at)
-                                    <span class="bg-blue-100 text-green-700 px-2 py-1 rounded">
-                                        Verkocht
-                                    </span>
+                                    <span class="pill pill-success">Verkocht</span>
                                 @else
-                                    <span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded">
-                                        Te koop
-                                    </span>
+                                    <span class="pill pill-warning">Te koop</span>
                                 @endif
                             </div>
 
-                            <div class="mt-auto flex max-w-full flex-nowrap gap-2 overflow-x-auto pt-2 pb-1 text-xs text-gray-600">
+                            <div class="tag-row">
                                 @if ($car->tags && $car->tags->isNotEmpty())
                                     @foreach ($car->tags as $tag)
-                                        <span
-                                            class="shrink-0 px-2 py-1 rounded text-white"
-                                            style="background-color: {{ $tag->color }}"
-                                        >
+                                        <span class="tag" style="background-color: {{ $tag->color }}; color: #fff;">
                                             {{ $tag->name }}
                                         </span>
                                     @endforeach
                                 @else
-                                    <span class="text-xs text-gray-400">Geen tags</span>
+                                    <span class="muted" style="font-size: 0.8rem;">Geen tags</span>
                                 @endif
                             </div>
-
                         </div>
                     </a>
                 @endforeach
@@ -133,6 +111,5 @@
                 </text>
             </svg>
         </template>
-
-    </main>
+    </div>
 </x-base-layout>

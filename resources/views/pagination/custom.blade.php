@@ -1,19 +1,19 @@
 @if ($paginator->hasPages())
-    <nav role="navigation" aria-label="Pagination" class="flex flex-wrap items-center justify-between gap-3">
-        <div class="text-xs text-gray-500">
+    <nav role="navigation" aria-label="Pagination" class="pagination">
+        <div class="muted">
             Pagina {{ $paginator->currentPage() }} van {{ $paginator->lastPage() }}
         </div>
 
-        <div class="flex flex-wrap items-center gap-2">
+        <div class="stack" style="flex-direction: row; gap: 0.5rem;">
             @if ($paginator->onFirstPage())
-                <span class="inline-flex items-center rounded-full border border-gray-200 bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-400">
+                <span class="page-link disabled">
                     Vorige
                 </span>
             @else
                 <a
                     href="{{ $paginator->previousPageUrl() }}"
                     rel="prev"
-                    class="inline-flex items-center rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-semibold text-gray-700 transition hover:border-gray-300 hover:bg-gray-50"
+                    class="page-link"
                 >
                     Vorige
                 </a>
@@ -21,7 +21,7 @@
 
             @foreach ($elements as $element)
                 @if (is_string($element))
-                    <span class="px-2 text-xs text-gray-400">{{ $element }}</span>
+                    <span class="muted">{{ $element }}</span>
                 @endif
 
                 @if (is_array($element))
@@ -29,14 +29,14 @@
                         @if ($page == $paginator->currentPage())
                             <span
                                 aria-current="page"
-                                class="inline-flex h-8 w-8 items-center justify-center rounded-full border border-gray-900 bg-gray-900 text-xs font-semibold text-white"
+                                class="page-link active"
                             >
                                 {{ $page }}
                             </span>
                         @else
                             <a
                                 href="{{ $url }}"
-                                class="inline-flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 bg-white text-xs font-semibold text-gray-700 transition hover:border-gray-300 hover:bg-gray-50"
+                                class="page-link"
                             >
                                 {{ $page }}
                             </a>
@@ -49,12 +49,12 @@
                 <a
                     href="{{ $paginator->nextPageUrl() }}"
                     rel="next"
-                    class="inline-flex items-center rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-semibold text-gray-700 transition hover:border-gray-300 hover:bg-gray-50"
+                    class="page-link"
                 >
                     Volgende
                 </a>
             @else
-                <span class="inline-flex items-center rounded-full border border-gray-200 bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-400">
+                <span class="page-link disabled">
                     Volgende
                 </span>
             @endif

@@ -1,19 +1,14 @@
 <x-base-layout>
-	<div class="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6">
-		<div class="mb-6 flex flex-wrap items-center justify-between gap-3">
-			<a
-				href="{{ route('home') }}"
-				class="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-widest text-gray-700 shadow-sm transition hover:-translate-y-0.5 hover:shadow"
-			>
-				<span aria-hidden="true">←</span>
-				Terug naar aanbod
-			</a>
-		</div>
+	<div class="container page stack">
+		<a href="{{ route('home') }}" class="btn btn-outline" style="width: fit-content;">
+			<span aria-hidden="true">←</span>
+			Terug naar aanbod
+		</a>
 
-		<div class="grid gap-6 lg:grid-cols-5">
-			<section class="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm lg:col-span-3">
-				<div class="relative">
-					<div class="h-72 bg-gradient-to-br from-gray-50 via-white to-gray-100 sm:h-96">
+		<div class="grid grid-2">
+			<section class="card">
+				<div>
+					<div class="card-media" style="height: 320px;">
 						@if ($car->image)
 							<img
 								src="{{ $car->image }}"
@@ -44,136 +39,103 @@
 						@endif
 					</div>
 
-					<div class="absolute left-6 top-6 flex flex-wrap items-center gap-2">
-						<span class="rounded-full bg-gray-900 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-white">
-							{{ $car->license_plate }}
-						</span>
+					<div class="stack" style="flex-direction: row; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem;">
+						<span class="badge">{{ $car->license_plate }}</span>
 						@if ($car->sold_at)
-							<span class="rounded-full bg-green-100 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-green-700">
-								Verkocht
-							</span>
+							<span class="pill pill-success">Verkocht</span>
 						@else
-							<span class="rounded-full bg-yellow-100 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-yellow-700">
-								Te koop
-							</span>
+							<span class="pill pill-warning">Te koop</span>
 						@endif
 					</div>
 				</div>
 
-				<div class="space-y-6 p-6">
-					<div class="flex flex-wrap items-center justify-between gap-4">
-						<div>
-							<p class="text-xs uppercase tracking-[0.3em] text-gray-400">{{ $car->production_year ?? 'Onbekend' }}</p>
-							<h1 class="text-3xl font-semibold text-gray-900">
-								{{ $car->make }} {{ $car->model }}
-							</h1>
-						</div>
-						<div class="rounded-2xl border border-gray-200 bg-gray-50 px-5 py-3 text-right">
-							<p class="text-[10px] uppercase tracking-widest text-gray-400">Prijs</p>
-							<p class="mt-1 text-2xl font-semibold text-gray-900">
-								€{{ number_format($car->price, 0, ',', '.') }}
-							</p>
-						</div>
-					</div>
+                <div class="stack" style="margin-top: 1rem;">
+                    <div class="card-header">
+                        <div>
+                            <p class="muted">{{ $car->production_year ?? 'Onbekend' }}</p>
+                            <h1>{{ $car->make }} {{ $car->model }}</h1>
+                        </div>
+                        <div>
+                            <p class="muted">Prijs</p>
+                            <p class="price">€{{ number_format($car->price, 0, ',', '.') }}</p>
+                        </div>
+                    </div>
 
-					<div class="grid gap-4 sm:grid-cols-2">
-						<div class="rounded-2xl border border-gray-200 bg-white p-4">
-							<p class="text-[10px] uppercase tracking-widest text-gray-400">Kilometerstand</p>
-							<p class="mt-2 text-lg font-semibold text-gray-900">
-								{{ number_format($car->mileage, 0, ',', '.') }} km
-							</p>
-						</div>
-						<div class="rounded-2xl border border-gray-200 bg-white p-4">
-							<p class="text-[10px] uppercase tracking-widest text-gray-400">Kleur</p>
-							<p class="mt-2 text-lg font-semibold text-gray-900">
-								{{ $car->color ?? 'Onbekend' }}
-							</p>
-						</div>
-						<div class="rounded-2xl border border-gray-200 bg-white p-4">
-							<p class="text-[10px] uppercase tracking-widest text-gray-400">Zitplaatsen</p>
-							<p class="mt-2 text-lg font-semibold text-gray-900">
-								{{ $car->seats ?? '–' }}
-							</p>
-						</div>
-						<div class="rounded-2xl border border-gray-200 bg-white p-4">
-							<p class="text-[10px] uppercase tracking-widest text-gray-400">Deuren</p>
-							<p class="mt-2 text-lg font-semibold text-gray-900">
-								{{ $car->doors ?? '–' }}
-							</p>
-						</div>
-					</div>
+                    <div class="grid grid-2">
+                        <div class="card">
+                            <p class="muted">Kilometerstand</p>
+                            <p><strong>{{ number_format($car->mileage, 0, ',', '.') }} km</strong></p>
+                        </div>
+                        <div class="card">
+                            <p class="muted">Kleur</p>
+                            <p><strong>{{ $car->color ?? 'Onbekend' }}</strong></p>
+                        </div>
+                        <div class="card">
+                            <p class="muted">Zitplaatsen</p>
+                            <p><strong>{{ $car->seats ?? '–' }}</strong></p>
+                        </div>
+                        <div class="card">
+                            <p class="muted">Deuren</p>
+                            <p><strong>{{ $car->doors ?? '–' }}</strong></p>
+                        </div>
+                    </div>
 
-					<div class="rounded-2xl border border-dashed border-gray-200 bg-gray-50 p-5">
-						<p class="text-[10px] uppercase tracking-widest text-gray-400">Tags</p>
-						<div class="mt-3 flex flex-wrap gap-2">
-							@if ($car->tags && $car->tags->isNotEmpty())
-								@foreach ($car->tags as $tag)
-									<span
-										class="rounded-full px-3 py-1 text-xs font-semibold text-white"
-										style="background-color: {{ $tag->color }}"
-									>
-										{{ $tag->name }}
-									</span>
-								@endforeach
-							@else
-								<span class="text-sm text-gray-500">Geen tags toegevoegd</span>
-							@endif
-						</div>
-					</div>
-				</div>
+                    <div class="card">
+                        <p class="muted">Tags</p>
+                        <div class="stack" style="flex-direction: row; flex-wrap: wrap; gap: 0.5rem;">
+                            @if ($car->tags && $car->tags->isNotEmpty())
+                                @foreach ($car->tags as $tag)
+                                    <span class="tag" style="background-color: {{ $tag->color }}; color: #fff;">
+                                        {{ $tag->name }}
+                                    </span>
+                                @endforeach
+                            @else
+                                <span class="muted">Geen tags toegevoegd</span>
+                            @endif
+                        </div>
+                    </div>
+                </div>
 			</section>
 
-			<aside class="space-y-6 lg:col-span-2">
-				<div class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
-					<div class="flex items-center justify-between">
-						<p class="text-xs uppercase tracking-widest text-gray-400">Status</p>
-						@if ($car->sold_at)
-							<span class="rounded-full bg-green-100 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-green-700">
-								Verkocht
-							</span>
-						@else
-							<span class="rounded-full bg-yellow-100 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-yellow-700">
-								Te koop
-							</span>
-						@endif
-					</div>
-					<div class="mt-4 rounded-2xl border border-gray-100 bg-gray-50 p-4">
-						<p class="text-[10px] uppercase tracking-widest text-gray-400">Snel overzicht</p>
-						<div class="mt-3 space-y-2 text-sm text-gray-700">
-							<div class="flex items-center justify-between">
-								<span>Bouwjaar</span>
-								<span class="font-semibold text-gray-900">{{ $car->production_year ?? '–' }}</span>
-							</div>
-							<div class="flex items-center justify-between">
-								<span>Gewicht</span>
-								<span class="font-semibold text-gray-900">
-									{{ $car->weight ? number_format($car->weight, 0, ',', '.') . ' kg' : '–' }}
-								</span>
-							</div>
-							<div class="flex items-center justify-between">
-								<span>Bekeken</span>
-								<span class="font-semibold text-gray-900">
-									{{ number_format($car->views, 0, ',', '.') }} keer
-								</span>
-							</div>
+			<aside class="stack">
+				<div class="card">
+					<p class="muted">Status</p>
+					@if ($car->sold_at)
+						<span class="pill pill-success">Verkocht</span>
+					@else
+						<span class="pill pill-warning">Te koop</span>
+					@endif
+
+					<div class="stack" style="margin-top: 1rem;">
+						<div class="card">
+							<p class="muted">Bouwjaar</p>
+							<p><strong>{{ $car->production_year ?? '–' }}</strong></p>
+						</div>
+						<div class="card">
+							<p class="muted">Gewicht</p>
+							<p><strong>{{ $car->weight ? number_format($car->weight, 0, ',', '.') . ' kg' : '–' }}</strong></p>
+						</div>
+						<div class="card">
+							<p class="muted">Bekeken</p>
+							<p><strong>{{ number_format($car->views, 0, ',', '.') }} keer</strong></p>
 						</div>
 					</div>
 				</div>
 
-				<div class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
-					<p class="text-xs uppercase tracking-widest text-gray-400">Registratie</p>
-					<div class="mt-4 grid gap-3 text-sm text-gray-700">
-						<div class="flex items-center justify-between">
+				<div class="card">
+					<p class="muted">Registratie</p>
+					<div class="stack" style="gap: 0.5rem;">
+						<div class="card-header">
 							<span>Kenteken</span>
-							<span class="font-semibold text-gray-900">{{ $car->license_plate }}</span>
+							<span><strong>{{ $car->license_plate }}</strong></span>
 						</div>
-						<div class="flex items-center justify-between">
+						<div class="card-header">
 							<span>Merk</span>
-							<span class="font-semibold text-gray-900">{{ $car->make }}</span>
+							<span><strong>{{ $car->make }}</strong></span>
 						</div>
-						<div class="flex items-center justify-between">
+						<div class="card-header">
 							<span>Model</span>
-							<span class="font-semibold text-gray-900">{{ $car->model }}</span>
+							<span><strong>{{ $car->model }}</strong></span>
 						</div>
 					</div>
 				</div>

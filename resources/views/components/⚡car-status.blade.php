@@ -52,14 +52,14 @@ new class extends Component
         type="number"
         wire:model.lazy="price"
         wire:change="updatePrice"
-        class="w-20 text-xs border border-gray-300 rounded-md px-2 py-0.5 text-gray-800"
+        class="input input-small"
+        style="max-width: 90px;"
     >
 
    
     <button
         wire:click="toggleSold"
-        class="inline-flex items-center justify-center text-[11px] font-semibold px-2.5 py-0.5 rounded-full leading-tight whitespace-nowrap text-center
-            {{ $sold ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700' }}"
+        class="pill {{ $sold ? 'pill-warning' : 'pill-success' }}"
     >
         {{ $sold ? 'Verkocht' : 'Te koop' }}
     </button>
