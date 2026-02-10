@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('license_plate');
             $table->string('make');
             $table->string('model');
-            $table->decimal('price',);
+            $table->decimal('price', 15, 2);
             $table->integer('mileage');
             $table->integer('seats')->nullable();
             $table->integer('doors')->nullable();

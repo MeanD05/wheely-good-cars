@@ -1,7 +1,7 @@
 <x-base-layout>
     <x-slot name="title">Offer Car - Wheely Good Cars</x-slot>
 
-    <div class="bg-gray-100 min-h-screen">
+    <div class="bg-gray-100 min-h-screen pt-28">
         <div class="container max-w-3xl mx-auto mt-10 mb-16">
 
             <!-- Kenteken linksboven -->
@@ -53,7 +53,7 @@
             <p  class="text-gray-600 mb-8">Controleer de gegevens van uw voertuig</p>
             <p class="text-gray-600 mb-8">Indien er onjuistheden zijn, pas deze dan aan en klik op "Aanbod afronden".</p>       
 
-            <form action="{{ route('offercar.store') }}" method="POST" class="bg-white p-6 rounded-lg shadow-md">
+            <form action="{{ route('offercar.store') }}" method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow-md">
             
                 @csrf
 
@@ -114,6 +114,13 @@
                     <div class="md:col-span-2">
                         <label class="block text-sm font-medium mb-1">Vraagprijs (€)</label>
                         <input type="number" name="price" class="w-full rounded-lg border-gray-300 focus:ring-black focus:border-black">
+                    </div>
+
+                    <!-- Foto -->
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium mb-1">Foto</label>
+                        <input type="file" name="image" accept="image/*" class="w-full rounded-lg border-gray-300 focus:ring-black focus:border-black">
+                        <p class="mt-1 text-xs text-gray-500">Max 4MB. JPG, PNG of WEBP.</p>
                     </div>
 
                 </div>

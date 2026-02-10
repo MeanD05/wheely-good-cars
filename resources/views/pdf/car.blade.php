@@ -4,18 +4,18 @@
   <meta charset="utf-8">
   <title>Voertuigoverzicht</title>
   <style>
-    @page { margin: 28px; }
+    @page { margin: 20px; }
 
     body {
       font-family: DejaVu Sans, sans-serif;
-      font-size: 12px;
+      font-size: 11px;
       color: #111;
     }
 
     .brandbar {
       border-bottom: 2px solid #111;
-      padding-bottom: 14px;
-      margin-bottom: 18px;
+      padding-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .brand {
@@ -27,7 +27,7 @@
     }
 
     .title {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 700;
       margin: 0;
     }
@@ -41,9 +41,9 @@
     .badge {
       float: right;
       border: 1px solid #111;
-      padding: 10px 12px;
+      padding: 8px 10px;
       text-align: right;
-      width: 170px;
+      width: 155px;
     }
 
     .badge .label {
@@ -55,7 +55,7 @@
     }
 
     .badge .price {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 700;
       margin: 0;
     }
@@ -70,8 +70,8 @@
 
     .section {
       border: 1px solid #e6e6e6;
-      padding: 14px;
-      margin: 12px 0;
+      padding: 10px;
+      margin: 8px 0;
     }
 
     .section-title {
@@ -95,7 +95,7 @@
     }
 
     .spec {
-      padding: 8px 0;
+      padding: 6px 0;
       border-bottom: 1px solid #f0f0f0;
     }
 
@@ -126,14 +126,14 @@
       vertical-align: top;
       width: 33.3333%;
       font-size: 12px;
-      padding: 10px;
+      padding: 6px;
       box-sizing: border-box;
     }
 
     .card-inner {
       border: 1px solid #e6e6e6;
-      padding: 12px;
-      height: 78px;
+      padding: 10px;
+      height: 64px;
     }
 
     .card-label {
@@ -145,22 +145,37 @@
     }
 
     .card-value {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 700;
       margin: 0;
     }
 
     .foot {
-      margin-top: 18px;
-      padding-top: 12px;
+      margin-top: 12px;
+      padding-top: 10px;
       border-top: 1px solid #e6e6e6;
       color: #666;
-      font-size: 10px;
+      font-size: 9.5px;
     }
 
     .foot strong { color: #111; }
 
     .muted { color: #666; }
+
+    .terms {
+      font-size: 9.5px;
+      color: #555;
+      line-height: 1.4;
+    }
+
+    .terms ul {
+      margin: 4px 0 0 14px;
+      padding: 0;
+    }
+
+    .terms li {
+      margin: 3px 0;
+    }
   </style>
 </head>
 <body>
@@ -225,7 +240,38 @@
         <div class="spec"><span class="k">Zitplaatsen</span><span class="v">{{ $car->seats ?? '-' }}</span></div>
         <div class="spec"><span class="k">Deuren</span><span class="v">{{ $car->doors ?? '-' }}</span></div>
         <div class="spec"><span class="k">Gewicht</span><span class="v">{{ $car->weight ? number_format($car->weight, 0, ',', '.') . ' kg' : '-' }}</span></div>
+        <div class="spec"><span class="k">Status</span><span class="v">{{ $car->sold_at ? 'Verkocht' : 'Beschikbaar' }}</span></div>
       </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <p class="section-title">Aanbieder</p>
+
+    <div class="cols">
+      <div class="col">
+        <div class="spec"><span class="k">Naam</span><span class="v">{{ $user->name ?? '-' }}</span></div>
+        <div class="spec"><span class="k">E-mail</span><span class="v">{{ $user->email ?? '-' }}</span></div>
+        <div class="spec"><span class="k">Telefoon</span><span class="v">{{ $user->phone_number ?? '-' }}</span></div>
+      </div>
+      <div class="col">
+        <div class="spec"><span class="k">Referentie</span><span class="v">{{ $car->license_plate ?? '-' }}</span></div>
+        <div class="spec"><span class="k">Document</span><span class="v">{{ $car->id ?? '-' }}</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <p class="section-title">Voorwaarden en disclaimer</p>
+    <div class="terms">
+      <p class="muted">Deze voertuigkaart is informatief en niet bindend.</p>
+      <ul>
+        <li>Prijzen en beschikbaarheid zijn onder voorbehoud van bevestiging door de aanbieder.</li>
+        <li>Kilometerstand en specificaties zijn overgenomen uit invoer en kunnen afwijken.</li>
+        <li>Typefouten en omissies voorbehouden.</li>
+        <li>Inspectie en proefrit worden aanbevolen voor aankoop.</li>
+        <li>De uiteindelijke verkoopinformatie wordt vastgelegd in het koopcontract.</li>
+      </ul>
     </div>
   </div>
 

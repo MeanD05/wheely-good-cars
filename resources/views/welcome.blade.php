@@ -1,5 +1,8 @@
 <x-base-layout>
     <main class="max-w-7xl mx-auto p-6">
+        <h1 class="text-2xl font-bold text-gray-800 mb-6">
+            Aanbod van {{ $cars->total() }} {{ Str::plural('auto', $cars->total()) }}
+        </h1>
 
         @if ($cars->isEmpty())
             <div class="bg-gray-50 border border-gray-200 text-gray-500 p-4 text-center italic rounded-md">
@@ -20,14 +23,27 @@
                                     alt="{{ $car->make }} {{ $car->model }}"
                                     class="object-cover w-full h-full"
                                     loading="lazy"
+                                    onerror="this.onerror=null;this.parentNode.innerHTML=document.getElementById('car-image-placeholder').innerHTML;"
                                 >
                             @else
-                                <img
-                                    src="{{ asset('images/placeholder-car.png') }}"
-                                    alt="Geen afbeelding beschikbaar"
-                                    class="object-contain w-full h-full p-4 opacity-60"
-                                    loading="lazy"
-                                >
+                                <svg width="400" height="250" viewBox="0 0 400 250" class="w-full h-full">
+                                    <defs>
+                                        <linearGradient id="placeholder-bg" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="0%" stop-color="#f6f7f9" />
+                                            <stop offset="100%" stop-color="#eceff3" />
+                                        </linearGradient>
+                                    </defs>
+                                    <rect width="400" height="250" fill="url(#placeholder-bg)" rx="14" ry="14" />
+                                    <rect x="24" y="24" width="352" height="202" rx="10" ry="10" fill="none" stroke="#d6dbe1" />
+                                    <path d="M86 162 Q108 126 146 126 H254 Q292 126 314 162" fill="none" stroke="#b9c0c9" stroke-width="8" stroke-linecap="round" />
+                                    <path d="M100 168 Q120 142 146 142 H254 Q280 142 300 168" fill="#d9dee5" />
+                                    <circle cx="128" cy="176" r="12" fill="#9aa3ad" />
+                                    <circle cx="272" cy="176" r="12" fill="#9aa3ad" />
+                                    <rect x="172" y="118" width="56" height="16" rx="6" fill="#c6ccd4" />
+                                    <text x="50%" y="196" text-anchor="middle" fill="#6b7280" font-family="Arial, sans-serif" font-size="15" letter-spacing="0.02em">
+                                        Geen afbeelding beschikbaar
+                                    </text>
+                                </svg>
                             @endif
                         </div>
 
@@ -59,7 +75,7 @@
                                 </span>
 
                                 @if ($car->sold_at)
-                                    <span class="bg-green-100 text-green-700 px-2 py-1 rounded">
+                                    <span class="bg-blue-100 text-green-700 px-2 py-1 rounded">
                                         Verkocht
                                     </span>
                                 @else
@@ -77,7 +93,32 @@
                     </div>
                 @endforeach
             </div>
+
+            <div class="mt-6">
+                {{ $cars->links() }}
+            </div>
         @endif
+
+        <template id="car-image-placeholder">
+            <svg width="400" height="250" viewBox="0 0 400 250" class="w-full h-full">
+                <defs>
+                    <linearGradient id="placeholder-bg" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#f6f7f9" />
+                        <stop offset="100%" stop-color="#eceff3" />
+                    </linearGradient>
+                </defs>
+                <rect width="400" height="250" fill="url(#placeholder-bg)" rx="14" ry="14" />
+                <rect x="24" y="24" width="352" height="202" rx="10" ry="10" fill="none" stroke="#d6dbe1" />
+                <path d="M86 162 Q108 126 146 126 H254 Q292 126 314 162" fill="none" stroke="#b9c0c9" stroke-width="8" stroke-linecap="round" />
+                <path d="M100 168 Q120 142 146 142 H254 Q280 142 300 168" fill="#d9dee5" />
+                <circle cx="128" cy="176" r="12" fill="#9aa3ad" />
+                <circle cx="272" cy="176" r="12" fill="#9aa3ad" />
+                <rect x="172" y="118" width="56" height="16" rx="6" fill="#c6ccd4" />
+                <text x="50%" y="196" text-anchor="middle" fill="#6b7280" font-family="Arial, sans-serif" font-size="15" letter-spacing="0.02em">
+                    Geen afbeelding beschikbaar
+                </text>
+            </svg>
+        </template>
 
     </main>
 </x-base-layout>

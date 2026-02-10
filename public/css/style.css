@@ -24,9 +24,10 @@ body {
     color: #fff;
     padding: 1rem 0;
     position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-   
-   
+    z-index: 1000;
 }
 
 .header-container {
@@ -98,6 +99,10 @@ main {
     width: 100%;
 }
 
+.main-content {
+    padding-top: 120px;
+}
+
 /* Footer */
 .footer {
     background-color: #000;
@@ -135,5 +140,9 @@ main {
     main {
         margin: 1rem;
         padding: 0 1rem;
+    }
+
+    .main-content {
+        padding-top: 170px;
     }
 }

@@ -15,7 +15,7 @@ class CarController extends Controller
      */
     public function index()
     {
-        $cars = Car::latest()->get();
+        $cars = Car::latest()->paginate(21);
         return view('welcome', ['cars' => $cars]);
     }
 
@@ -25,7 +25,7 @@ class CarController extends Controller
     public function showmycars()
     {
         $user = auth()->user();
-        $cars = Car::where('user_id', $user->id)->get();
+        $cars = Car::where('user_id', $user->id)->latest()->paginate(21);
         return view('mycars', ['cars' => $cars]);
     }
 
@@ -42,15 +42,25 @@ class CarController extends Controller
      */
     public function create_step1()
     {
-
+        
 
         $license_plate_api = strtoupper(str_replace('-', '', request('license_plate')));
         $license_plate = strtoupper(request('license_plate'));
 
+        if (Car::where('license_plate', $license_plate)->exists()) {
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'license_plate' => 'Deze auto is al aangeboden.'
+                ]);
+        }
+
+        
+
        
 
 
-        
+        //API CALL
         $response = Http::withHeaders([
             'X-App-Token' => config('services.rdw.token'),
             'Accept' => 'application/json',
@@ -104,19 +114,22 @@ class CarController extends Controller
             'license_plate' => 'required|string',
             'make' => 'required|string',
             'model' => 'required|string',
-            'price' => 'required|numeric|min:0 |max:1000000',
+            'price' => 'required|numeric|min:0|max:10000000',
             'mileage' => 'required|integer|min:0|max:1000000',
             'seats' => 'nullable|integer',
             'doors' => 'nullable|integer',
             'year' => 'nullable|integer',
             'weight' => 'nullable|integer',
             'color' => 'nullable|string',
+            'image' => 'nullable|image|max:4096',
         ], [
             'license_plate.required' => 'Het kenteken is verplicht.',
             'make.required' => 'Het merk is verplicht.',
             'model.required' => 'Het model is verplicht.',
             'price.required' => 'De prijs is verplicht.',
             'mileage.required' => 'De kilometerstand is verplicht.',
+            'image.image' => 'Upload een geldige afbeelding (jpg, png, webp).',
+            'image.max' => 'De afbeelding mag maximaal 4MB zijn.',
             'seats.integer' => 'Het aantal zitplaatsen moet een getal zijn.',
             'doors.integer' => 'Het aantal deuren moet een getal zijn.',
             'year.integer' => 'Het bouwjaar moet een getal zijn.',
@@ -125,11 +138,31 @@ class CarController extends Controller
             'price.numeric' => 'De prijs moet een getal zijn.',
             'mileage.integer' => 'De kilometerstand moet een geheel getal zijn.',
             'price.min' => 'De prijs moet minimaal 0 zijn.',
-            'price.max' => 'De prijs mag niet hoger zijn dan 1.000.000.',
+            'price.max' => 'De prijs mag niet hoger zijn dan 10.000.000',
             'mileage.min' => 'De kilometerstand moet minimaal 0 zijn.',
             'mileage.max' => 'De kilometerstand mag niet hoger zijn dan 1.000.000.',
         ]);
 
+        $imageUrl = null;
+        $imageFile = $request->file('image');
+        if ($imageFile && !$imageFile->isValid()) {
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'image' => 'Upload mislukt. Controleer bestandstype en grootte.'
+                ]);
+        }
+        if ($imageFile && $imageFile->isValid()) {
+            $targetDir = public_path('img/cars');
+            if (!is_dir($targetDir)) {
+                mkdir($targetDir, 0755, true);
+            }
+
+            $extension = $imageFile->getClientOriginalExtension();
+            $filename = uniqid('car_', true) . '.' . $extension;
+            $imageFile->move($targetDir, $filename);
+            $imageUrl = '/img/cars/' . $filename;
+        }
 
         $user = auth()->user();
 
@@ -145,6 +178,7 @@ class CarController extends Controller
             'production_year' => $validated['year'] ?? null,
             'weight' => $validated['weight'] ?? null,
             'color' => $validated['color'] ?? null,
+            'image' => $imageUrl,
         ]);
 
         return redirect()->route('home')->with('success', 'Auto succesvol toegevoegd!');
