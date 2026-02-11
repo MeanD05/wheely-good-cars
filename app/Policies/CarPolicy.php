@@ -37,7 +37,7 @@ class CarPolicy
      */
     public function update(User $user, Car $car): bool
     {
-        return false;
+        return $user->id === $car->user_id;
     }
 
     /**
@@ -45,7 +45,7 @@ class CarPolicy
      */
     public function delete(User $user, Car $car): bool
     {
-        return false;
+        return $user->id === $car->user_id;
     }
 
     /**

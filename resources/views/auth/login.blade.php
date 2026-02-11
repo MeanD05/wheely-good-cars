@@ -36,6 +36,11 @@
                     {{ __('Wachtwoord vergeten?') }}
                 </a>
             @endif
+            @if (Route::has('register'))
+                <a href="{{ route('register') }}" class="muted" style="text-decoration: underline;">
+                    {{ __('Nog geen account? Registreren') }}
+                </a>
+            @endif
         </div>
     </form>
 </x-guest-layout>

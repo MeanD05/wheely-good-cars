@@ -44,7 +44,7 @@
 
 				<div class="stack" style="flex-direction: row; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem;">
 					<button type="submit" class="btn btn-red">Tags opslaan</button>
-					<a href="{{ route('home') }}" class="btn btn-outline">Overslaan</a>
+					<a href="{{ route('home') }}" class="btn btn-outline">Opslaan zonder tags</a>
 				</div>
 			</form>
 		</div>

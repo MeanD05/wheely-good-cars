@@ -44,6 +44,7 @@ class TagSeeder extends Seeder
             ['name' => 'Apple CarPlay', 'color' => '#0ea5e9'],
             ['name' => 'Android Auto', 'color' => '#22c55e'],
             ['name' => 'Leder interieur', 'color' => '#a16207'],
+            ['name' => 'speciaal', 'color' => '#f43f5e'],
         ];
 
         foreach ($tags as $tag) {

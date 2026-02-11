@@ -47,6 +47,8 @@ class TagFactory extends Factory
             ['name' => 'Apple CarPlay', 'color' => '#0ea5e9'],
             ['name' => 'Android Auto', 'color' => '#22c55e'],
             ['name' => 'Leder interieur', 'color' => '#a16207'],
+            ['name' => 'speciaal', 'color' => '#f43f5e'],
+            
         ];
 
         $tag = $this->faker->randomElement($tags);

@@ -16,6 +16,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/offercar', [CarController::class, 'create'])->name('offercar'); 
     Route::post('/offercar/addcar', [CarController::class, 'create_step1'])->name('offercar.step1');
     Route::get('/offercar/addcar/{license_plate}', [CarController::class, 'create_step2'])->name('offercar.step2');
+    Route::get('/offercar/tags/{car}', [CarController::class, 'create_step3'])->name('offercar.step3');
     Route::post('/offercar/store', [CarController::class, 'store'])->name('offercar.store');
     Route::post('/offercar/store_tags', [CarController::class, 'store_tags'])->name('offercar.store_tags');
     Route::get('/mycars', [CarController::class, 'showmycars'])->name('cars.mycars');

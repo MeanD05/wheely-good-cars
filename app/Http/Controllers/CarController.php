@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http; // ✅ correcte import
+use Illuminate\Support\Facades\Http; 
 use App\Models\Car;
 use App\Models\Tag;
 use App\Http\Requests\StoreCarRequest;
@@ -57,11 +57,6 @@ class CarController extends Controller
                 ]);
         }
 
-        
-
-       
-
-
         //API CALL
         $response = Http::withHeaders([
             'X-App-Token' => config('services.rdw.token'),
@@ -69,9 +64,6 @@ class CarController extends Controller
         ])->get('https://opendata.rdw.nl/resource/m9d7-ebf2.json', [
             'kenteken' => $license_plate_api,
         ]);
-
-
-       
 
        if ($response->failed()) {
             return back()
@@ -91,7 +83,6 @@ class CarController extends Controller
                 ]);
         }
 
-   
         session(['car_api_data' => $data[0]]);
 
         return redirect()->route('offercar.step2', [
@@ -112,6 +103,8 @@ class CarController extends Controller
    
     public function store(StoreCarRequest $request)
     {
+        $this->authorize('create', Car::class);
+
         $validated = $request->validate([
             'license_plate' => 'required|string',
             'make' => 'required|string',
@@ -185,15 +178,32 @@ class CarController extends Controller
 
         $tags = Tag::all();
         $car = Car::where('license_plate', $validated['license_plate'])->first();
-        return view('offercar_step3', ['car' => $car, 'tags' => $tags])->with('success', 'Auto succesvol toegevoegd!');
+        return redirect()->route('offercar.step3', ['car' => $car])->with('tags', $tags);
+    }
+
+    public function create_step3(Car $car)
+    {
+        $this->authorize('view', $car);
+        $tags = Tag::orderBy('name')->get();
+        return view('offercar_step3', [
+            'car' => $car,
+            'tags' => $tags,
+        ]);
     }
 
     public function store_tags(Request $request)
     {
+        $this->authorize('update', Car::findOrFail($request->input('car_id')));
         $validated = $request->validate([
             'car_id' => 'required|exists:cars,id',
             'tags' => 'required|array',
             'tags.*' => 'exists:tags,id',
+        ],[
+            'car_id.required' => 'Er is een fout opgetreden bij het opslaan van de tags. Probeer het opnieuw.',
+            'car_id.exists' => 'De opgegeven auto bestaat niet.',
+            'tags.required' => 'Selecteer minimaal één tag, of klik op "Opslaan zonder tags".',
+            'tags.array' => 'Ongeldige tags-indeling.',
+            'tags.*.exists' => 'Een of meer geselecteerde tags bestaan niet.',
         ]);
 
         $car = Car::findOrFail($validated['car_id']);
@@ -204,6 +214,7 @@ class CarController extends Controller
 
     public function edit_tags(Car $car)
     {
+        $this->authorize('update', $car);
         $tags = Tag::orderBy('name')->get();
 
         return view('edit_tags', [
@@ -243,6 +254,7 @@ class CarController extends Controller
      */
     public function destroy(Car $car)
     {
+        $this->authorize('delete', $car);
         $car->delete();
         return redirect()->route('cars.mycars')->with('success', 'Auto succesvol verwijderd!');
     }
