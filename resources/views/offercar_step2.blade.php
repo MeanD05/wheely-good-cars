@@ -1,8 +1,14 @@
 <x-base-layout>
     <x-slot name="title">Offer Car - Wheely Good Cars</x-slot>
 
-    <div class="container page">
-        <div class="stack" style="max-width: 860px; margin: 0 auto;">
+        <div class="container page">
+            <div style="max-width: 860px; margin: 0 auto 2rem auto;">
+                <div class="progressbar" style="height: 8px; background: #eceff3; border-radius: 6px; overflow: hidden;">
+                    <div style="width: 60%; height: 100%; background: linear-gradient(90deg, #b71c1c 60%, #e57373 100%); transition: width 0.3s;"></div>
+                </div>
+                <div style="text-align: right; font-size: 0.9em; color: #b71c1c; margin-top: 0.2em;">Stap 2 van 3</div>
+            </div>
+            <div class="stack" style="max-width: 860px; margin: 0 auto;">
 
             <div class="plate plate-small">
                 <div class="plate-eu">
@@ -105,3 +111,4 @@
         </div>
     </div>
 </x-base-layout>
+

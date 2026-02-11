@@ -18,7 +18,8 @@ class CarController extends Controller
     public function index()
     {
         $cars = Car::latest()->paginate(21);
-        return view('welcome', ['cars' => $cars]);
+        $tags = Tag::orderBy('name')->get();
+        return view('welcome', ['cars' => $cars, 'tags' => $tags]);
     }
 
     /**
@@ -138,6 +139,13 @@ class CarController extends Controller
             'mileage.max' => 'De kilometerstand mag niet hoger zijn dan 1.000.000.',
         ]);
 
+        if (Car::where('license_plate', $validated['license_plate'])->exists()) {
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'license_plate' => 'Deze auto is al aangeboden.'
+                ]);
+        }
         $imageUrl = null;
         $imageFile = $request->file('image');
         if ($imageFile && !$imageFile->isValid()) {
@@ -209,7 +217,7 @@ class CarController extends Controller
         $car = Car::findOrFail($validated['car_id']);
         $car->tags()->sync($validated['tags']);
 
-        return redirect()->route('cars.mycars')->with('success', 'Tags succesvol opgeslagen.');
+        return redirect()->route('cars.mycars')->with('success', 'Auto en/of tags succesvol opgeslagen!');
     }
 
     public function edit_tags(Car $car)

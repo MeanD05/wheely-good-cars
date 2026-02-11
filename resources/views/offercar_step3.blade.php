@@ -1,5 +1,11 @@
 <x-base-layout>
 	<div class="container page">
+		<div style="max-width: 900px; margin: 0 auto 2rem auto;">
+			<div class="progressbar" style="height: 8px; background: #eceff3; border-radius: 6px; overflow: hidden;">
+				<div style="width: 100%; height: 100%; background: linear-gradient(90deg, #b71c1c 60%, #e57373 100%); transition: width 0.3s;"></div>
+			</div>
+			<div style="text-align: right; font-size: 0.9em; color: #b71c1c; margin-top: 0.2em;">Stap 3 van 3</div>
+		</div>
 		<div class="stack" style="max-width: 900px; margin: 0 auto;">
 			<div class="card">
 				<h1>Kies tags voor je auto</h1>
@@ -44,7 +50,7 @@
 
 				<div class="stack" style="flex-direction: row; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem;">
 					<button type="submit" class="btn btn-red">Tags opslaan</button>
-					<a href="{{ route('home') }}" class="btn btn-outline">Opslaan zonder tags</a>
+					<a href="{{ route('cars.mycars') }}" class="btn btn-outline">Opslaan zonder tags</a>
 				</div>
 			</form>
 		</div>

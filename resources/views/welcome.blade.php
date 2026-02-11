@@ -3,8 +3,20 @@
 
         <h1>Aanbod van {{ $cars->total() }} {{ Str::plural('auto', $cars->total()) }}</h1>
 
-        <div style="max-width: 400px; margin-bottom: 1.5rem;">
-            <input id="car-search" type="text" class="input w-full" placeholder="Zoek op merk of model..." oninput="filterCars()">
+
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: flex-end; margin-bottom: 1.5rem;">
+            <div style="max-width: 400px; flex: 1;">
+                <input id="car-search" type="text" class="input w-full" placeholder="Zoek op merk of model..." oninput="filterCars()">
+            </div>
+            <div style="min-width: 220px;">
+                <label for="tag-filter" class="muted" style="font-size: 0.92rem; margin-bottom: 0.25rem; display: block;">Filter op tags:</label>
+                <select id="tag-filter" class="input w-full" multiple size="1" style="min-width: 180px; max-width: 260px;" onchange="filterCars()">
+                    <option value="" selected>Alle tags</option>
+                    @foreach($tags as $tag)
+                        <option value="{{ strtolower($tag->name) }}" data-color="{{ $tag->color }}">{{ $tag->name }}</option>
+                    @endforeach
+                </select>
+            </div>
         </div>
 
         @if ($cars->isEmpty())
@@ -17,6 +29,7 @@
                     <a
                         href="{{ route('car.show', $car) }}"
                         class="card"
+                                                data-tags="{{ $car->tags->pluck('name')->map(fn($n)=>strtolower($n))->implode(',') }}"
                         aria-label="Bekijk {{ $car->make }} {{ $car->model }}"
                         data-make="{{ strtolower($car->make) }}"
                         data-model="{{ strtolower($car->model) }}"
@@ -113,10 +126,17 @@
         <script>
         function filterCars() {
             const q = document.getElementById('car-search').value.trim().toLowerCase();
+            const tagSelect = document.getElementById('tag-filter');
+            let selectedTags = Array.from(tagSelect.selectedOptions)
+                .map(opt => opt.value)
+                .filter(v => v && v !== '');
             document.querySelectorAll('#car-grid > a.card').forEach(card => {
                 const make = card.getAttribute('data-make') || '';
                 const model = card.getAttribute('data-model') || '';
-                card.style.display = (make.includes(q) || model.includes(q)) ? '' : 'none';
+                const tags = (card.getAttribute('data-tags') || '').split(',');
+                const matchesSearch = (make.includes(q) || model.includes(q));
+                const matchesTags = !selectedTags.length || selectedTags.some(tag => tags.includes(tag));
+                card.style.display = (matchesSearch && matchesTags) ? '' : 'none';
             });
         }
         </script>

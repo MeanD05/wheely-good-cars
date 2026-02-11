@@ -13,7 +13,7 @@ class CarPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class CarPolicy
      */
     public function view(User $user, Car $car): bool
     {
-        return false;
+        return $user->id === $car->user_id;
     }
 
     /**
@@ -29,7 +29,7 @@ class CarPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
