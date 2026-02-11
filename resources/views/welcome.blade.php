@@ -1,20 +1,26 @@
 <x-base-layout>
     <div class="container page stack">
+
         <h1>Aanbod van {{ $cars->total() }} {{ Str::plural('auto', $cars->total()) }}</h1>
+
+        <div style="max-width: 400px; margin-bottom: 1.5rem;">
+            <input id="car-search" type="text" class="input w-full" placeholder="Zoek op merk of model..." oninput="filterCars()">
+        </div>
 
         @if ($cars->isEmpty())
             <div class="card muted" style="text-align: center;">
                 Nog geen auto’s geplaatst.
             </div>
         @else
-            <div class="card-grid">
+            <div class="card-grid" id="car-grid">
                 @foreach ($cars as $car)
                     <a
                         href="{{ route('car.show', $car) }}"
                         class="card"
                         aria-label="Bekijk {{ $car->make }} {{ $car->model }}"
+                        data-make="{{ strtolower($car->make) }}"
+                        data-model="{{ strtolower($car->model) }}"
                     >
-
                         {{-- Image --}}
                         <div class="card-media">
                             @if ($car->image)
@@ -46,30 +52,24 @@
                                 </svg>
                             @endif
                         </div>
-
                         {{-- Content --}}
                         <div class="card-body">
                             <div class="muted" style="font-size: 0.8rem;">
                                 {{ $car->license_plate }}
                             </div>
-
                             <h2>{{ $car->make }} {{ $car->model }}</h2>
-
                             <div class="card-header">
                                 <span class="price">€{{ number_format($car->price, 0, ',', '.') }}</span>
                                 <span class="muted">{{ $car->production_year }}</span>
                             </div>
-
                             <div class="stack" style="gap: 0.5rem;">
                                 <span class="pill">{{ number_format($car->mileage, 0, ',', '.') }} km</span>
-
                                 @if ($car->sold_at)
                                     <span class="pill pill-success">Verkocht</span>
                                 @else
                                     <span class="pill pill-warning">Te koop</span>
                                 @endif
                             </div>
-
                             <div class="tag-row">
                                 @if ($car->tags && $car->tags->isNotEmpty())
                                     @foreach ($car->tags as $tag)
@@ -85,7 +85,6 @@
                     </a>
                 @endforeach
             </div>
-
             <div class="mt-6">
                 {{ $cars->links() }}
             </div>
@@ -111,5 +110,15 @@
                 </text>
             </svg>
         </template>
+        <script>
+        function filterCars() {
+            const q = document.getElementById('car-search').value.trim().toLowerCase();
+            document.querySelectorAll('#car-grid > a.card').forEach(card => {
+                const make = card.getAttribute('data-make') || '';
+                const model = card.getAttribute('data-model') || '';
+                card.style.display = (make.includes(q) || model.includes(q)) ? '' : 'none';
+            });
+        }
+        </script>
     </div>
 </x-base-layout>
