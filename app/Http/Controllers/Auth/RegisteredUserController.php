@@ -28,25 +28,40 @@ class RegisteredUserController extends Controller
      * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request): RedirectResponse
-    {
+        {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'phone_number' => ['string', 'max:15', 'nullable'],
+
+            'country_code' => ['nullable', 'string', 'max:6'],
+            'phone' => ['nullable', 'string', 'max:25'],
         ]);
+
+        $fullPhone = null;
+
+        if ($request->filled('phone')) {
+            $countryCode = $request->input('country_code', '+31');
+
+            // alleen cijfers uit phone halen
+            $phone = preg_replace('/[^0-9]/', '', (string) $request->phone);
+
+            // voorloopnul verwijderen (06 -> 6), werkt goed voor NL en meestal ook voor andere landen
+            $phone = ltrim($phone, '0');
+
+            $fullPhone = $countryCode . $phone;
+        }
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'phone_number'=> $request->phone_number,
+            'phone_number' => $fullPhone,
         ]);
 
         event(new Registered($user));
-
         Auth::login($user);
 
         return redirect(route('home', absolute: false));
-    }
+        }
 }

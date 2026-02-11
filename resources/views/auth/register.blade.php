@@ -21,10 +21,42 @@
 
         <!-- Phone Number -->
         <div>
-            <x-input-label for="phone_number" :value="__('Telefoonnummer')" />
-            <p class="muted" style="font-size: 0.8rem;">Landcode: +31</p>
-            <x-text-input id="phone_number" type="text" name="phone_number" :value="old('phone_number')" required autocomplete="phone_number" />
-            <x-input-error :messages="$errors->get('phone_number')" />
+            <x-input-label for="phone" :value="__('Telefoonnummer')" />
+
+            <div style="display:flex; gap:0.5rem; align-items:center;">
+                
+                <select 
+                    id="country_code" 
+                    name="country_code"
+                    style="
+                        width: 130px;
+                        padding: 0.5rem;
+                        border-radius: 6px;
+                        border: 1px solid #ccc;
+                        background: white;
+                    "
+                >
+                    <option value="+31" selected>+31 🇳🇱</option>
+                    <option value="+32">+32 🇧🇪</option>
+                    <option value="+49">+49 🇩🇪</option>
+                    <option value="+33">+33 🇫🇷</option>
+                    <option value="+44">+44 🇬🇧</option>
+                    <option value="+34">+34 🇪🇸</option>
+                    <option value="+39">+39 🇮🇹</option>
+                    <option value="+1">+1 🇺🇸</option>
+                </select>
+
+                <x-text-input 
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    placeholder="612345678"
+                    required
+                    style="flex:1;"
+                />
+            </div>
+
+            <x-input-error :messages="$errors->get('phone')" />
         </div>
 
         <!-- Password -->

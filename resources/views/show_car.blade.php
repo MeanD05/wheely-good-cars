@@ -131,7 +131,7 @@
 						</div>
 						<div class="card-header">
 							<span>Telefoon</span>
-							<span>+31 <strong>{{ $car->user->phone_number ?? 'Onbekend' }}</strong></span>
+							<p><strong>{{ $car->user->phone_number ?? 'Onbekend' }}</strong></p>
 						</div>
 					</div>
 				</div>
@@ -145,7 +145,7 @@
 							<a href="mailto:{{ $car->user->email }}" class="btn btn-red">E-mail aanbieder</a>
 						@endif
 						@if (!empty($car->user->phone_number))
-							<a href="tel:+31{{ preg_replace('/\D/', '', $car->user->phone_number) }}" class="btn btn-outline">Bel aanbieder</a>
+							<a href="tel:{{ $car->user->phone_number }}" class="btn btn-outline">Bel aanbieder</a>
 						@endif
 					</div>
 				</div>

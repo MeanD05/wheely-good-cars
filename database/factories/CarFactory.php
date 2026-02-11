@@ -44,7 +44,7 @@ class CarFactory extends Factory
             'color' => $this->faker->safeColorName(),
             'views' => $this->faker->numberBetween(0, 5000),
             'sold_at' => $this->faker->optional(0.2)->dateTimeThisYear(),
-            'image' => 'https://loremflickr.com/640/480/car?' . uniqid(),
+            'image' => 'https://loremflickr.com/640/480/roadcar?' . uniqid(),
         ];
     }
 }
