@@ -191,4 +191,44 @@
 			</text>
 		</svg>
 	</template>
-</x-base-layout>
+
+	
+	<div id="viewToast" style="display:none; position:fixed; right:16px; bottom:16px; z-index:2000;">
+		<div class="card" style="max-width:360px; display:flex; gap:12px; align-items:flex-start; padding:10px 12px;">
+			<div style="width:10px; background:var(--accent); border-radius:2px; margin-top:6px;"></div>
+			<div style="flex:1">
+				<div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
+					<strong>Populair</strong>
+					<small class="muted">Vandaag</small>
+				</div>
+				<div class="muted" style="margin-top:6px;">10 klanten bekeken deze auto vandaag</div>
+			</div>
+			<button id="viewToastClose" class="btn btn-outline" style="padding:6px 8px; height:36px; align-self:flex-start;">Sluiten</button>
+		</div>
+	</div>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function(){
+			var toast = document.getElementById('viewToast');
+			var close = document.getElementById('viewToastClose');
+			if(!toast) return;
+
+			var autoHideTimer;
+
+			function showToast(){
+				toast.style.display = 'block';
+				autoHideTimer = setTimeout(hideToast, 6000);
+			}
+
+			function hideToast(){
+				toast.style.display = 'none';
+				clearTimeout(autoHideTimer);
+			}
+
+			
+			setTimeout(showToast, 10000);
+
+			if(close) close.addEventListener('click', hideToast);
+		});
+	</script>
+	</x-base-layout>
