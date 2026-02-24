@@ -19,6 +19,9 @@
                 <a href="{{ route('home') }}" class="nav-link">Alle auto's</a>
                 <a href="{{ route('cars.mycars') }}" class="nav-link">Mijn aangeboden auto's</a>
                 <a href="{{ route('offercar') }}" class="nav-link">Aanbod plaatsen</a>
+                @if (auth()->check() && (auth()->user()->isadmin ?? auth()->user()->is_admin ?? false))
+                    <a href="{{ route('admin.dashboard') }}" class="nav-link">Admin Dashboard</a>
+                @endif
             </nav>
 
             <div class="auth-links">
@@ -64,7 +67,7 @@
             </div>
         @endif
 
-        @if ($errors->any())
+        @if (isset($errors) && $errors->any())
             <div class="p-3 mb-3 rounded bg-red-100 text-red-800 border border-red-200">
                 <ul class="list-disc list-inside">
                     @foreach ($errors->all() as $error)
