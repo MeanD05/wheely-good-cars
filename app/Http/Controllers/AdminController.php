@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Tag;
 
 class AdminController extends Controller
 {
@@ -17,8 +18,19 @@ class AdminController extends Controller
             abort(403);
         }
 
-        // Controller can supply stats/recentCars later. For now just render view.
-        return view('admin');
+        $tags = Tag::query()
+            ->withCount('cars')
+            ->withCount([
+                'cars as sold_cars_count' => fn ($query) => $query->whereNotNull('sold_at'),
+                'cars as unsold_cars_count' => fn ($query) => $query->whereNull('sold_at'),
+            ])
+            ->orderBy('name')
+            ->get();
+
+
+        
+
+        return view('admin', compact('tags'));
     }
 
     /**

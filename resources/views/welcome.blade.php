@@ -24,17 +24,24 @@
                 Nog geen auto’s geplaatst.
             </div>
         @else
+            @php
+            
+                $featuredIndices = collect(range(0, $cars->count() - 1))
+                    ->shuffle()
+                    ->take(max(1, (int) ceil($cars->count() / 4)))
+                    ->flip();
+            @endphp
             <div class="card-grid" id="car-grid">
                 @foreach ($cars as $car)
                     <a
                         href="{{ route('car.show', $car) }}"
-                        class="card"
-                                                data-tags="{{ $car->tags->pluck('name')->map(fn($n)=>strtolower($n))->implode(',') }}"
+                        class="card {{ $featuredIndices->has($loop->index) ? 'card-featured' : '' }}"
+                        data-tags="{{ $car->tags->pluck('name')->map(fn($n)=>strtolower($n))->implode(',') }}"
                         aria-label="Bekijk {{ $car->make }} {{ $car->model }}"
                         data-make="{{ strtolower($car->make) }}"
                         data-model="{{ strtolower($car->model) }}"
                     >
-                        {{-- Image --}}
+                       
                         <div class="card-media">
                             @if ($car->image)
                                 <img
@@ -65,7 +72,7 @@
                                 </svg>
                             @endif
                         </div>
-                        {{-- Content --}}
+                       
                         <div class="card-body">
                             <div class="muted" style="font-size: 0.8rem;">
                                 {{ $car->license_plate }}
