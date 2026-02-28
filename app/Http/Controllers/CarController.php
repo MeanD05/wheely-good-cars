@@ -104,6 +104,8 @@ class CarController extends Controller
    
     public function store(StoreCarRequest $request)
     {
+        $this->authorize('create', Car::class);
+        
         $validated = $request->validate([
             'license_plate' => 'required|string',
             'make' => 'required|string',
