@@ -104,8 +104,6 @@ class CarController extends Controller
    
     public function store(StoreCarRequest $request)
     {
-        $this->authorize('create', Car::class);
-
         $validated = $request->validate([
             'license_plate' => 'required|string',
             'make' => 'required|string',
@@ -186,7 +184,7 @@ class CarController extends Controller
 
         $tags = Tag::all();
         $car = Car::where('license_plate', $validated['license_plate'])->first();
-        return redirect()->route('offercar.step3', ['car' => $car])->with('tags', $tags);
+        return redirect()->route('offercar.step3', ['car' => $car])->with('tags', $tags)->with('success', 'Auto succesvol opgeslagen!');    
     }
 
     public function create_step3(Car $car)

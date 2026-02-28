@@ -105,6 +105,7 @@
                     >
                         Aanbod afronden
                     </button>
+                    <a href="{{ route('home') }}" class="btn btn-outline" style="margin-left: 0.5rem;">Annuleren</a>  
                 </div>
             </form>
 

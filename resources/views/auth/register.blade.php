@@ -50,7 +50,7 @@
                     id="phone"
                     name="phone"
                     type="tel"
-                    placeholder="612345678"
+                    placeholder="0612345678"
                     required
                     style="flex:1;"
                 />

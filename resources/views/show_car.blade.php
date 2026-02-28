@@ -201,7 +201,7 @@
 					<strong>Populair</strong>
 					<small class="muted">Vandaag</small>
 				</div>
-				<div class="muted" style="margin-top:6px;">10 klanten bekeken deze auto vandaag</div>
+				<div class="muted" style="margin-top:6px;">{{ $car->views }} klanten bekeken deze auto</div>
 			</div>
 			<button id="viewToastClose" class="btn btn-outline" style="padding:6px 8px; height:36px; align-self:flex-start;">Sluiten</button>
 		</div>

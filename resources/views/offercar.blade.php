@@ -47,6 +47,8 @@
                 >
                     Ga verder
                 </button>
+                <a href="{{ route('home') }}" class="btn btn-outline" style="width: 100%; margin-top: 0.5rem;">Annuleren</a>    
+
 
                 <p class="muted" style="text-align: center; margin-top: 1rem; font-size: 0.8rem;">
                     Door verder te gaan ga je door naar de volgende stap.
