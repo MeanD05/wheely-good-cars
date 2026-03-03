@@ -13,12 +13,12 @@ class CarFactory extends Factory
     {
         $makesAndModels = [
 
-         
+
             'Ferrari' => ['488 GTB', 'F8 Tributo', 'Roma', 'SF90 Stradale'],
             'Lamborghini' => ['Huracán', 'Aventador', 'Urus'],
             'McLaren' => ['570S', '720S', 'Artura'],
 
-        
+
             'Porsche' => ['911', 'Panamera', 'Cayenne', 'Taycan'],
             'BMW' => ['3 Series', '5 Series', 'X5', 'M3', 'M5'],
             'Audi' => ['A4', 'A6', 'Q7', 'RS6', 'e-tron GT'],
@@ -26,7 +26,7 @@ class CarFactory extends Factory
             'Tesla' => ['Model S', 'Model 3', 'Model X', 'Model Y'],
             'Volvo' => ['XC40', 'XC60', 'XC90', 'V60'],
 
-            
+
             'Volkswagen' => ['Golf', 'Passat', 'Tiguan', 'Polo'],
             'Toyota' => ['Corolla', 'RAV4', 'Prius', 'Yaris'],
             'Ford' => ['Focus', 'Fiesta', 'Mustang', 'Explorer'],
@@ -40,23 +40,20 @@ class CarFactory extends Factory
         $make = $this->faker->randomElement(array_keys($makesAndModels));
         $model = $this->faker->randomElement($makesAndModels[$make]);
 
-        
+
         $licensePlate = strtoupper(
             $this->faker->unique()->bothify('??-###-??')
         );
 
         $productionYear = $this->faker->numberBetween(2000, 2024);
 
-        
+
         $price = match ($make) {
             'Ferrari', 'Lamborghini', 'McLaren' => $this->faker->numberBetween(180000, 450000),
             'Porsche', 'BMW', 'Audi', 'Mercedes', 'Tesla', 'Volvo' => $this->faker->numberBetween(35000, 150000),
             default => $this->faker->numberBetween(5000, 45000),
         };
 
-       
-        $seed = strtolower(preg_replace('/[^a-zA-Z0-9]/', '', $licensePlate));
-        $imageUrl = "https://picsum.photos/seed/{$seed}/640/480";
 
         return [
             'license_plate' => $licensePlate,
@@ -71,7 +68,7 @@ class CarFactory extends Factory
             'color' => $this->faker->safeColorName(),
             'views' => $this->faker->numberBetween(0, 5000),
             'sold_at' => $this->faker->optional(0.15)->dateTimeThisYear(),
-            'image' => $imageUrl,
+            'image' => null,
         ];
     }
 }

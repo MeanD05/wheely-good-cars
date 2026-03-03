@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http; 
+use Illuminate\Support\Facades\Http;
 use App\Models\Car;
 use App\Models\Tag;
 use App\Http\Requests\StoreCarRequest;
@@ -12,9 +12,6 @@ use App\Http\Requests\UpdateCarRequest;
 
 class CarController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $cars = Car::latest()->paginate(21);
@@ -22,9 +19,7 @@ class CarController extends Controller
         return view('welcome', ['cars' => $cars, 'tags' => $tags]);
     }
 
-    /**
-     * Show the cars of the authenticated user.
-     */
+
     public function showmycars()
     {
         $user = auth()->user();
@@ -32,21 +27,15 @@ class CarController extends Controller
         return view('mycars', ['cars' => $cars]);
     }
 
-    /**
-     * Show the form for creating a new car.
-     */
+
     public function create()
     {
         return view('offercar');
     }
 
-    /**
-     * Step 1: Get car data from RDW API using license plate.
-     */
+
     public function create_step1()
     {
-        
-
         $license_plate_api = strtoupper(str_replace('-', '', request('license_plate')));
         $license_plate = strtoupper(request('license_plate'));
 
@@ -91,7 +80,7 @@ class CarController extends Controller
         ]);
     }
 
-    
+
     public function create_step2($license_plate)
     {
         $car_api_data = session('car_api_data');
@@ -101,11 +90,11 @@ class CarController extends Controller
         ]);
     }
 
-   
+
     public function store(StoreCarRequest $request)
     {
         $this->authorize('create', Car::class);
-        
+
         $validated = $request->validate([
             'license_plate' => 'required|string',
             'make' => 'required|string',
@@ -186,7 +175,7 @@ class CarController extends Controller
 
         $tags = Tag::all();
         $car = Car::where('license_plate', $validated['license_plate'])->first();
-        return redirect()->route('offercar.step3', ['car' => $car])->with('tags', $tags)->with('success', 'Auto succesvol opgeslagen!');    
+        return redirect()->route('offercar.step3', ['car' => $car])->with('tags', $tags)->with('success', 'Auto succesvol opgeslagen!');
     }
 
     public function create_step3(Car $car)
@@ -254,7 +243,7 @@ class CarController extends Controller
      */
     public function update(UpdateCarRequest $request, Car $car)
     {
-        
+
     }
 
     /**
