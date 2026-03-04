@@ -10,7 +10,7 @@ Route::get('/', [CarController::class, 'index'])->name('home');
 Route::get('/showcar/{car}', [CarController::class, 'show'])->name('car.show');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/offercar', [CarController::class, 'create'])->name('offercar'); 
+    Route::get('/offercar', [CarController::class, 'create'])->name('offercar');
     Route::post('/offercar/addcar', [CarController::class, 'create_step1'])->name('offercar.step1');
     Route::get('/offercar/addcar/{license_plate}', [CarController::class, 'create_step2'])->name('offercar.step2');
     Route::get('/offercar/tags/{car}', [CarController::class, 'create_step3'])->name('offercar.step3');

@@ -70,9 +70,11 @@ img {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-wrap: wrap;
+    flex-wrap: nowrap; /* keep logo, nav and auth-links on one line */
     gap: 0.75rem;
 }
+
+/* header-container kept as flex; avoid absolute positioning changes */
 
 .logo {
     font-size: 1.6rem;
@@ -81,20 +83,33 @@ img {
     text-transform: uppercase;
 }
 
+.logo {
+    flex: 0 0 auto; /* prevent logo from shrinking too small */
+}
+
 .nav {
     display: flex;
-    gap: 0.75rem;
+    gap: 0.5rem;
+    flex: 1 1 auto; /* allow nav to take remaining space */
+    min-width: 0; /* allow shrinking without forcing wrap */
+    justify-content: center;
 }
+
+/* nav behavior unchanged */
 
 .nav-link {
     color: #f9fafb;
     text-decoration: none;
-    padding: 0.4rem 0.8rem;
+    padding: 0.3rem 0.6rem; /* slightly reduced to avoid wrapping */
     border-radius: var(--radius);
     letter-spacing: 0.02rem;
     text-transform: uppercase;
     font-size: 0.82rem;
     transition: background 0.2s;
+}
+
+.nav-link {
+    white-space: nowrap; /* keep individual nav items on one line */
 }
 
 .nav-link:hover {
@@ -105,6 +120,7 @@ img {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    flex: 0 0 auto; /* keep auth links from growing/shrinking */
 }
 .auth-links a,
 .auth-links button {
@@ -121,6 +137,23 @@ img {
     letter-spacing: 0.02rem;
     text-transform: uppercase;
 }
+    .auth-links {
+        white-space: nowrap; /* prevent internal wrapping */
+    }
+    .auth-links a,
+    .auth-links button,
+    .auth-links form,
+    .auth-links p {
+        display: inline-flex;
+        align-items: center;
+        margin: 0; /* reset default margins so items stay aligned */
+    }
+
+    .auth-links {
+        margin-left: auto; /* push auth links to the far right */
+    }
+
+/* responsive behavior unchanged from previous baseline */
 
 .auth-links a:hover,
 .auth-links button:hover {
@@ -820,4 +853,3 @@ main {
         height: 140px;
     }
 }
- 

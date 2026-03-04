@@ -17,7 +17,7 @@ class MyCarPdfController extends Controller
             'user' => $request->user(),
         ])->setPaper('a4', 'portrait');
 
-        $filename = 'wheely-good-cars-' . ($car->license_plate ?: $car->id) . '-' . $car->make . '-' . ($car->model ?: '') . '.pdf';
+        $filename = ($car->license_plate ?: $car->id) . '-' . $car->make . '-' . ($car->model ?: '') . '-wheely-good-cars.pdf';
 
         return $pdf->download($filename);
     }

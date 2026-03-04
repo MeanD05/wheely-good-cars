@@ -28,7 +28,7 @@ class AdminController extends Controller
             ->get();
 
 
-        
+
 
         return view('admin', compact('tags'));
     }
