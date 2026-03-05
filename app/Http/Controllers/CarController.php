@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\CarView;
 use Illuminate\Support\Facades\Http;
 use App\Models\Car;
 use App\Models\Tag;
@@ -227,7 +228,7 @@ class CarController extends Controller
     {
         $car = Car::findOrFail($car->id);
         $car->increment('views');
-        return view('show_car', ['car' => $car]);
+        return view('show_car', compact('car'));
     }
 
     /**

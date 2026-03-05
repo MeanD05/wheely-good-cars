@@ -4,7 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\MyCarPdfController;
-use App\Http\Controllers\AdminController;
+// AdminController removed; DashboardController handles admin dashboard
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', [CarController::class, 'index'])->name('home');
 Route::get('/showcar/{car}', [CarController::class, 'show'])->name('car.show');
@@ -22,6 +23,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/mycars/{car}/pdf', [MyCarPdfController::class, 'download'])->name('cars.pdf');
 });
 
-Route::middleware('auth')->get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
+Route::middleware('auth')->get('/admin', [DashboardController::class, 'index'])->name('admin.dashboard');
+
+// Realtime dashboard routes removed; keep simple admin index (tags only)
 
 require __DIR__.'/auth.php';

@@ -37,4 +37,5 @@
                 </div>
             @endif
         </div>
+    </div>
 </x-base-layout>

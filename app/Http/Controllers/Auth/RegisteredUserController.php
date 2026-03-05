@@ -46,10 +46,15 @@ class RegisteredUserController extends Controller
             // alleen cijfers uit phone halen
             $phone = preg_replace('/[^0-9]/', '', (string) $request->phone);
 
-            // voorloopnul verwijderen (06 -> 6), werkt goed voor NL en meestal ook voor andere landen
+            // voorloopnul verwijderen (06 -> 6)
             $phone = ltrim($phone, '0');
 
-            $fullPhone = $countryCode . $phone;
+            // If there are no digits after cleaning, don't save just the country code
+            if ($phone === '') {
+                $fullPhone = null;
+            } else {
+                $fullPhone = $countryCode . $phone;
+            }
         }
 
         $user = User::create([
