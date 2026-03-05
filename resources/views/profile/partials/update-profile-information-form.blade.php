@@ -1,64 +1,49 @@
-<section>
-    <header>
-        <h2>
-            {{ __('Profile Information') }}
-        </h2>
+<form id="send-verification" method="post" action="{{ route('verification.send') }}">
+    @csrf
+</form>
 
-        <p class="muted" style="margin-top: 0.35rem;">
-            {{ __("Update your account's profile information and email address.") }}
-        </p>
-    </header>
+<form method="post" action="{{ route('profile.update') }}" class="stack">
+    @csrf
+    @method('patch')
 
-    <form id="send-verification" method="post" action="{{ route('verification.send') }}">
-        @csrf
-    </form>
-
-    <form method="post" action="{{ route('profile.update') }}" class="stack" style="margin-top: 1rem;">
-        @csrf
-        @method('patch')
-
+    <div class="grid grid-2">
         <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" name="name" type="text" :value="old('name', $user->name)" required autofocus autocomplete="name" />
+            <label for="name" class="label">Naam</label>
+            <input id="name" name="name" type="text" value="{{ old('name', $user->name) }}" required autofocus autocomplete="name" class="input">
             <x-input-error :messages="$errors->get('name')" />
         </div>
 
         <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" name="email" type="email" :value="old('email', $user->email)" required autocomplete="username" />
+            <label for="email" class="label">E-mailadres</label>
+            <input id="email" name="email" type="email" value="{{ old('email', $user->email) }}" required autocomplete="username" class="input">
             <x-input-error :messages="$errors->get('email')" />
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
-                <div>
-                    <p class="muted" style="margin-top: 0.5rem;">
-                        {{ __('Your email address is unverified.') }}
-
-                        <button form="send-verification" class="btn btn-outline" style="margin-left: 0.5rem;">
-                            {{ __('Click here to re-send the verification email.') }}
-                        </button>
+                <p class="muted" style="margin-top: 0.5rem; font-size: 0.85rem;">
+                    {{ __('Je e-mailadres is niet geverifieerd.') }}
+                    <button form="send-verification" class="btn btn-outline" style="margin-left: 0.35rem; padding: 0.3rem 0.6rem; font-size: 0.78rem;">
+                        Verificatiemail opnieuw versturen
+                    </button>
+                </p>
+                @if (session('status') === 'verification-link-sent')
+                    <p class="status" style="margin-top: 0.4rem;">
+                        Er is een nieuwe verificatielink naar je e-mailadres gestuurd.
                     </p>
-
-                    @if (session('status') === 'verification-link-sent')
-                        <p class="status" style="margin-top: 0.5rem;">
-                            {{ __('A new verification link has been sent to your email address.') }}
-                        </p>
-                    @endif
-                </div>
+                @endif
             @endif
         </div>
+    </div>
 
-        <div class="stack" style="flex-direction: row; gap: 0.75rem; align-items: center;">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
-
-            @if (session('status') === 'profile-updated')
-                <p
-                    x-data="{ show: true }"
-                    x-show="show"
-                    x-transition
-                    x-init="setTimeout(() => show = false, 2000)"
-                    class="muted"
-                >{{ __('Saved.') }}</p>
-            @endif
-        </div>
-    </form>
-</section>
+    <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <button type="submit" class="btn">Opslaan</button>
+        @if (session('status') === 'profile-updated')
+            <span
+                x-data="{ show: true }"
+                x-show="show"
+                x-transition
+                x-init="setTimeout(() => show = false, 2000)"
+                class="status"
+            >Opgeslagen.</span>
+        @endif
+    </div>
+</form>

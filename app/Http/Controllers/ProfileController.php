@@ -26,6 +26,10 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
+        if ($request->user()->id !== Auth::id()) {
+            abort(403);
+        }
+
         $request->user()->fill($request->validated());
 
         if ($request->user()->isDirty('email')) {
@@ -34,7 +38,7 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('profile.edit')->with('success', 'Profiel bijgewerkt.');
     }
 
     /**
@@ -42,9 +46,18 @@ class ProfileController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
+        if ($request->user()->id !== Auth::id()) {
+            abort(403);
+        }
+
+        $messages = [
+            'password.required' => 'Voer je wachtwoord in om je account te verwijderen.',
+            'password.current_password' => 'Het wachtwoord is onjuist.',
+        ];
+
         $request->validateWithBag('userDeletion', [
             'password' => ['required', 'current_password'],
-        ]);
+        ], $messages);
 
         $user = $request->user();
 

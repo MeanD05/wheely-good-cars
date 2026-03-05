@@ -27,4 +27,26 @@ class ProfileUpdateRequest extends FormRequest
             ],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'Vul je naam in.',
+            'name.string' => 'De naam moet tekst zijn.',
+            'name.max' => 'De naam mag niet langer zijn dan :max tekens.',
+
+            'email.required' => 'Vul je e-mailadres in.',
+            'email.email' => 'Vul een geldig e-mailadres in.',
+            'email.max' => 'Het e-mailadres mag niet langer zijn dan :max tekens.',
+            'email.unique' => 'Dit e-mailadres is al in gebruik.',
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'name' => 'naam',
+            'email' => 'e-mailadres',
+        ];
+    }
 }

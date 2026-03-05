@@ -33,6 +33,29 @@ class LoginRequest extends FormRequest
     }
 
     /**
+     * Custom messages for validation (Dutch).
+     */
+    public function messages(): array
+    {
+        return [
+            'email.required' => 'Vul je e-mailadres in.',
+            'email.email' => 'Vul een geldig e-mailadres in.',
+            'password.required' => 'Vul je wachtwoord in.',
+        ];
+    }
+
+    /**
+     * Custom attribute names for nicer messages.
+     */
+    public function attributes(): array
+    {
+        return [
+            'email' => 'e-mailadres',
+            'password' => 'wachtwoord',
+        ];
+    }
+
+    /**
      * Attempt to authenticate the request's credentials.
      *
      * @throws \Illuminate\Validation\ValidationException
@@ -45,7 +68,7 @@ class LoginRequest extends FormRequest
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
+                'email' => 'Deze inloggegevens kloppen niet.',
             ]);
         }
 

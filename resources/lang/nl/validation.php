@@ -144,6 +144,8 @@ return [
         'password' => 'wachtwoord',
         'password_confirmation' => 'wachtwoordbevestiging',
         'phone_number' => 'telefoonnummer',
+        'phone' => 'telefoonnummer',
+        'country_code' => 'landcode',
         'license_plate' => 'kenteken',
         'make' => 'merk',
         'model' => 'model',

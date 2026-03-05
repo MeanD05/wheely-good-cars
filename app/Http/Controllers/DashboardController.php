@@ -26,8 +26,9 @@ class DashboardController extends Controller
             ])
             ->orderBy('name')
             ->get();
+             
 
-        return view('admin', compact('tags', 'suspiciousUsers'));
+        return view('admin', compact('tags'));
 
     }
 

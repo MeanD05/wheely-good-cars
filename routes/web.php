@@ -21,10 +21,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/mycars/{car}/tags', [CarController::class, 'edit_tags'])->name('cars.tags.edit');
     Route::delete('/mycars/{car}/delete', [CarController::class, 'destroy'])->name('cars.destroy');
     Route::get('/mycars/{car}/pdf', [MyCarPdfController::class, 'download'])->name('cars.pdf');
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 Route::middleware('auth')->get('/admin', [DashboardController::class, 'index'])->name('admin.dashboard');
 
-// Realtime dashboard routes removed; keep simple admin index (tags only)
 
 require __DIR__.'/auth.php';

@@ -13,7 +13,7 @@
     <header class="header">
 
         <div class="header-container">
-            <h1 class="logo">WheelyGoodCars</h1>
+            <a href="{{ route('home') }}" class="logo">WheelyGoodCars</a>
 
             <nav class="nav">
                 <a href="{{ route('home') }}" class="nav-link">Alle auto's</a>
@@ -28,9 +28,15 @@
                 @auth
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <button type="submit">Log uit</button>
+                        <button type="submit" class="btn btn-outline" style="padding: 0.4rem 0.6rem;">Log uit</button>
                     </form>
-                    <p class="muted">Ingelogd als: {{ Auth::user()->name }}</p>
+
+                    <a href="{{ route('profile.edit') }}" class="auth-user" title="Mijn profiel">
+                        <span class="auth-user-name">{{ Auth::user()->name }}</span>
+                        <svg class="auth-user-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </a>
 
                 @else
                     <a href="{{ route('login') }}">Log in</a>

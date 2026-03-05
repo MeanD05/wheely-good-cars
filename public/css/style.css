@@ -149,13 +149,52 @@ img {
         margin: 0; /* reset default margins so items stay aligned */
     }
 
+/* Styled username button in header */
+.auth-user {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.6rem;
+    border-radius: var(--radius);
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.12);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: background 0.12s, transform 0.06s;
+}
+
+.auth-user-name {
+    display: inline-block;
+    text-transform: none;
+}
+
+.auth-user-chevron {
+    display: inline-block;
+    color: rgba(255,255,255,0.92);
+    transition: transform 0.12s;
+}
+
+.auth-user:hover .auth-user-chevron,
+.auth-user:focus .auth-user-chevron {
+    transform: translateY(1px);
+}
+
+.auth-user:hover,
+.auth-user:focus {
+    background: rgba(255,255,255,0.14);
+    transform: translateY(-1px);
+    outline: none;
+}
+
     .auth-links {
         margin-left: auto; /* push auth links to the far right */
     }
 
 /* responsive behavior unchanged from previous baseline */
 
-.auth-links a:hover,
+.auth-links a:not(.auth-user):hover,
 .auth-links button:hover {
     background-color: #a11616;
 }
