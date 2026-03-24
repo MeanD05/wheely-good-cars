@@ -62,7 +62,6 @@ class DashboardController extends Controller
             })) {
                 $reasons[] = 'car_over_10000';
             }
-
             if ($user->cars->contains(function ($car) {
                 return $car->production_year
                     && $car->mileage !== null

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\CarView;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\File;
 use App\Models\Car;
 use App\Models\Tag;
 use App\Http\Requests\StoreCarRequest;
@@ -253,7 +253,15 @@ class CarController extends Controller
     public function destroy(Car $car)
     {
         $this->authorize('delete', $car);
+        if ($car->image) {
+            $filePath = public_path(ltrim($car->image, '/'));
+            if (File::exists($filePath)) {
+                File::delete($filePath);
+            }
+        }
+
         $car->delete();
+
         return redirect()->route('cars.mycars')->with('success', 'Auto succesvol verwijderd!');
     }
 }
