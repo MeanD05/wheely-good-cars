@@ -171,7 +171,7 @@ class DashboardController extends Controller
                 'sold' => $soldSeries,
                 'sold_vs_unsold' => [$soldCars, max($totalCars - $soldCars, 0)],
             ],
-            'updated_at' => $now->toDateTimeString(),
+            'updated_at' => $now->toIso8601String(),
         ]);
     }
 

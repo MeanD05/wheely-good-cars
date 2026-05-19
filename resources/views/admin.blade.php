@@ -3,8 +3,8 @@
         <div class="card" style="margin: 0 auto 1.5rem auto; background: linear-gradient(120deg, var(--navy) 0%, var(--navy-dark) 100%); border: none; color: #fff;">
             <div style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;">
                 <div>
-                    <h1 style="color: #fff; margin-bottom: 0.25rem;">Realtime aanbod dashboard</h1>
-                    <p style="color: rgba(255,255,255,0.7);">Live overzicht voor het hoofdkantoor. Data ververst automatisch elke 10 seconden.</p>
+                    <h1 style="color: #fff; margin-bottom: 0.25rem;">Admin Dashboard</h1>
+                    <p style="color: rgba(255,255,255,0.7);">Data ververst automatisch elke 10 seconden.</p>
                 </div>
                 <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
                     <span class="pill" style="background: rgba(255,255,255,0.12); color: #fff; border-color: rgba(255,255,255,0.2);">Laatste update: <span id="lastUpdated">-</span></span>
@@ -171,7 +171,10 @@
             soldRatioLabel.textContent = `${totals.sold_ratio}%`;
             soldProgress.style.width = `${totals.sold_ratio}%`;
 
-            document.getElementById("lastUpdated").textContent = payload.updated_at;
+            const updatedAt = new Date(payload.updated_at);
+            document.getElementById("lastUpdated").textContent = updatedAt.toLocaleString("nl-NL", {
+                timeZone: "Europe/Amsterdam",
+            });
 
             const weeklyData = {
                 labels: payload.charts.labels,
