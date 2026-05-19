@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Cache;
+use Carbon\Carbon;
 use App\Models\Car;
 use App\Models\Tag;
 use App\Http\Requests\StoreCarRequest;
@@ -228,6 +230,13 @@ class CarController extends Controller
     {
         $car = Car::findOrFail($car->id);
         $car->increment('views');
+
+        $viewsKey = 'car_views_' . Carbon::now()->toDateString();
+        if (! Cache::has($viewsKey)) {
+            Cache::put($viewsKey, 0, Carbon::now()->addDays(2));
+        }
+        Cache::increment($viewsKey);
+
         return view('show_car', compact('car'));
     }
 
